@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  {{> head}}
+  <title>Burgers &amp; Fries, Coming Soon | Luxe Latte</title>
+  <meta name="description" content="Luxe Latte’s eatery is coming soon: stacked burgers and golden fries. Join the list to hear first.">
+  <meta property="og:title" content="Burgers & Fries: coming soon to Luxe Latte">
+  <meta property="og:image" content="/img/logo.png">
+</head>
+<body>
+  {{> header}}
+
+  <main id="main" class="soon checker">
+    <section class="soon__card" aria-labelledby="soon-title">
+      <div>
+        <span class="eyebrow">Coming soon · The eatery</span>
+        <h1 id="soon-title">Burgers &amp; Fries</h1>
+        <p class="lead">Our kitchen is firing up. Stacked, juicy burgers and golden, crispy fries are on their way to Luxe Latte. Be the first to know when we open the grill.</p>
+
+        <form class="notify" data-notify novalidate>
+          <div class="field">
+            <label class="sr-only" for="notify-contact">Phone or email</label>
+            <input id="notify-contact" name="contact" type="text" inputmode="email" autocomplete="tel" placeholder="Phone or email" required>
+          </div>
+          <button class="btn" type="submit">Notify me</button>
+        </form>
+        <p class="error" data-notify-error hidden style="color:var(--danger);margin-top:8px;font-size:14px"></p>
+
+        <div class="soon__feats">
+          <div class="soon__feat"><strong>Burgers</strong><span>Stacked high and made to order.</span></div>
+          <div class="soon__feat"><strong>Fries</strong><span>Golden, crispy and generously salted.</span></div>
+          <div class="soon__feat"><strong>Perfect pairing</strong><span>With a chilled Luxe juice, obviously.</span></div>
+        </div>
+
+        <p class="soon__more">Thirsty while you wait? <a href="/#menu">Order a coffee or juice →</a></p>
+      </div>
+      <div class="soon__art" aria-hidden="true">
+        {{> burger-art}}
+      </div>
+    </section>
+  </main>
+
+  {{> footer}}
+  <script type="module" src="/js/eatery.js"></script>
+</body>
+</html>

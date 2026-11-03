@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+  {{> head}}
+  <title>Luxe Latte | Coffee &amp; Juice, Order Online</title>
+  <meta name="description" content="Order cappuccino, latte, mocha, espresso and fresh Luxe juices online from Luxe Latte. Pay with M-Pesa Paybill 714777 and skip the queue.">
+  <meta property="og:title" content="Luxe Latte | Coffee & Juice">
+  <meta property="og:description" content="Order ahead, pay with M-Pesa, skip the queue. Burgers & fries coming soon.">
+  <meta property="og:image" content="/img/logo.png">
+</head>
+<body>
+  {{> header}}
+
+  <main id="main">
+    <!-- ============ Hero ============ -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__band checker" aria-hidden="true"></div>
+      <div class="hero__panel">
+        <div class="container hero__grid">
+          <div class="hero__copy">
+            <div class="status-banner" data-closed-banner hidden></div>
+            <img class="hero__logo" src="/img/logo.png" alt="" width="120" height="75">
+            <span class="eyebrow">Coffee &amp; juice joint</span>
+            <h1 id="hero-title" style="margin-top:14px">Sip something <span class="accent">luxe.</span></h1>
+            <p class="hero__lede">Silky lattes, bold espresso and bright Luxe juices. Order ahead, pay with M-Pesa, and we’ll have it ready when you arrive.</p>
+            <div class="hero__ctas">
+              <a class="btn btn--lg" href="#menu">Start your order
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <a class="btn btn--lg btn--ghost" href="#cat-juice">See the juices</a>
+            </div>
+            <div class="hero__meta">
+              <span class="chip">Lipa na M-Pesa · Paybill <span data-paybill>714777</span></span>
+              <span class="chip">Pick up or dine in</span>
+              <a class="chip" href="/eatery" style="text-decoration:none">Burgers &amp; fries coming soon →</a>
+            </div>
+          </div>
+
+          <div class="hero__art" aria-hidden="true">
+            <svg viewBox="0 0 520 590" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="juiceGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#ffc93c"/>
+                  <stop offset=".55" stop-color="#f3a712"/>
+                  <stop offset="1" stop-color="#ee6c4d"/>
+                </linearGradient>
+                <linearGradient id="cupShade" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0" stop-color="#e6cfbe"/>
+                  <stop offset=".5" stop-color="#dcc1ae"/>
+                  <stop offset="1" stop-color="#c9a991"/>
+                </linearGradient>
+              </defs>
+
+              <!-- steam -->
+              <g fill="none" stroke="#c9a991" stroke-width="7" stroke-linecap="round" opacity=".7">
+                <path d="M262 46 q-14 -16 0 -32"/>
+                <path d="M300 40 q-16 -18 0 -36"/>
+                <path d="M338 46 q-14 -16 0 -32"/>
+              </g>
+
+              <!-- takeaway coffee cup -->
+              <g class="float">
+                <rect x="192" y="58" width="216" height="44" rx="20" fill="#744b2d"/>
+                <path d="M244 78 h66" stroke="#f3e2d0" stroke-width="9" stroke-linecap="round"/>
+                <circle cx="352" cy="77" r="10" fill="none" stroke="#f3e2d0" stroke-width="6"/>
+                <rect x="166" y="96" width="268" height="40" rx="14" fill="#744b2d"/>
+                <path d="M184 116 H416" stroke="#e8d2c0" stroke-width="4" stroke-linecap="round" opacity=".75"/>
+                <path d="M184 136 L416 136 L391 508 Q389 526 371 526 L229 526 Q211 526 209 508 Z" fill="url(#cupShade)"/>
+                <g stroke="#f1e2d5" stroke-width="5" stroke-linecap="round" opacity=".55" fill="none">
+                  <path d="M214 170 q30 -8 60 0"/><path d="M300 160 q40 -8 80 4"/>
+                  <path d="M220 440 q40 -10 90 0"/><path d="M320 470 q30 -8 55 2"/><path d="M230 490 q30 -6 60 0"/>
+                </g>
+                <path d="M187 218 L413 218 L401 404 L199 404 Z" fill="#7d5d44" stroke="#7d5d44" stroke-width="10" stroke-linejoin="round"/>
+                <circle cx="300" cy="306" r="72" fill="#ead6c4"/>
+                <g fill="#4e3634">
+                  <ellipse cx="278" cy="300" rx="23" ry="38" transform="rotate(-24 278 300)"/>
+                  <ellipse cx="324" cy="316" rx="21" ry="34" transform="rotate(-14 324 316)"/>
+                </g>
+                <g fill="none" stroke="#ead6c4" stroke-width="5" stroke-linecap="round">
+                  <path d="M287 268 q-22 30 -14 66"/>
+                  <path d="M331 287 q-20 26 -12 58"/>
+                </g>
+              </g>
+
+              <!-- juice cup -->
+              <g class="float-2" transform="translate(22 258)">
+                <path d="M30 70 L102 -38" stroke="#8a5d3a" stroke-width="14" stroke-linecap="round"/>
+                <path d="M30 70 L102 -38" stroke="#fff6ec" stroke-width="14" stroke-dasharray="10 14" stroke-linecap="butt"/>
+                <path d="M12 74 Q95 -4 178 74 Z" fill="#fff" fill-opacity=".9" stroke="#8a5d3a" stroke-width="5" stroke-linejoin="round"/>
+                <path d="M10 86 L180 86 L160 302 Q158 316 144 316 L46 316 Q32 316 30 302 Z" fill="#fff" fill-opacity=".92" stroke="#8a5d3a" stroke-width="5" stroke-linejoin="round"/>
+                <path d="M19 116 L171 116 L154 296 Q153 304 145 304 L45 304 Q37 304 36 296 Z" fill="url(#juiceGrad)"/>
+                <g fill="#fff" opacity=".4">
+                  <rect x="52" y="132" width="34" height="30" rx="7" transform="rotate(-12 69 147)"/>
+                  <rect x="100" y="150" width="30" height="28" rx="7" transform="rotate(14 115 164)"/>
+                  <circle cx="120" cy="240" r="6"/><circle cx="74" cy="262" r="4"/><circle cx="96" cy="212" r="3.5"/>
+                </g>
+                <path d="M46 132 L58 282" stroke="#fff" stroke-width="9" stroke-linecap="round" opacity=".5"/>
+                <rect x="0" y="68" width="190" height="22" rx="11" fill="#8a5d3a"/>
+                <g transform="translate(176 100)">
+                  <circle r="36" fill="#f3a712" stroke="#fff6ec" stroke-width="7"/>
+                  <circle r="24" fill="#ffc93c"/>
+                  <g stroke="#f3a712" stroke-width="3" stroke-linecap="round">
+                    <path d="M0 -22 V22"/><path d="M-22 0 H22"/><path d="M-16 -16 L16 16"/><path d="M16 -16 L-16 16"/>
+                  </g>
+                </g>
+              </g>
+
+              <!-- sparkles + beans -->
+              <g fill="#8a5d3a" opacity=".85">
+                <path d="M470 196 l6 16 16 6 -16 6 -6 16 -6 -16 -16 -6 16 -6z"/>
+                <path d="M120 120 l4 11 11 4 -11 4 -4 11 -4 -11 -11 -4 11 -4z"/>
+              </g>
+              <g transform="translate(460 470) rotate(30)" fill="#4e3634">
+                <ellipse rx="14" ry="21"/><path d="M-2 -18 q-8 18 2 36" stroke="#ead6c4" stroke-width="3" fill="none"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Menu ============ -->
+    <section class="section" id="menu" aria-labelledby="menu-title" style="padding-top:clamp(40px,6vw,72px)">
+      <div class="container">
+        <div class="section__head section__head--center">
+          <span class="eyebrow">The menu</span>
+          <h2 id="menu-title">What are you sipping?</h2>
+          <p>Tap a price to add it to your order. Every drink comes in two sizes.</p>
+        </div>
+        <div class="menu-nav-wrap"><nav class="menu-nav" aria-label="Menu categories" data-menu-nav></nav></div>
+        <div class="boards" data-boards>
+          <div class="board"><div class="skeleton" style="height:420px"></div></div>
+          <div class="board"><div class="skeleton" style="height:420px"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ How it works ============ -->
+    <section class="section" style="background:var(--paper)" aria-labelledby="how-title">
+      <div class="container">
+        <div class="section__head">
+          <span class="eyebrow">Order ahead</span>
+          <h2 id="how-title">Skip the queue in three sips</h2>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div class="step__num">1</div>
+            <h3>Pick your drinks</h3>
+            <p>Choose your coffee or Luxe juice and the size. Add a note if you like it a certain way.</p>
+          </div>
+          <div class="step">
+            <div class="step__num">2</div>
+            <h3>Pay with M-Pesa</h3>
+            <p>Pay via Paybill <strong data-paybill>714777</strong>, account <strong data-account>0112542203</strong>, then pop in your confirmation code. Or pay at the counter.</p>
+          </div>
+          <div class="step">
+            <div class="step__num">3</div>
+            <h3>Collect &amp; enjoy</h3>
+            <p>Watch your order go from received to ready on your tracking page, then come grab it.</p>
+          </div>
+        </div>
+
+        <div class="paybox" style="margin-top:clamp(48px,7vw,72px)">
+          <div class="paybox__badge"><img src="/img/logo-mark-cream.png" alt="" width="60" height="60"></div>
+          <div class="paybox__lines">
+            <div class="paybox__line">Paybill: <span data-paybill>714777</span> <button type="button" class="copy" data-copy="714777"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/></svg><span>Copy</span></button></div>
+            <div class="paybox__line">Account: <span data-account>0112542203</span> <button type="button" class="copy" data-copy="0112542203"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/></svg><span>Copy</span></button></div>
+          </div>
+          <p class="paybox__note">M-Pesa → Lipa na M-Pesa → Pay Bill. Enter the amount from your order page.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Eatery: coming soon ============ -->
+    <section class="eatery-teaser checker" id="eatery" aria-labelledby="eatery-title">
+      <div class="container">
+        <div class="eatery-card">
+          <div>
+            <span class="eyebrow">Coming soon · The eatery</span>
+            <h2 id="eatery-title">Burgers &amp; Fries</h2>
+            <p>Our kitchen is firing up. Stacked, juicy burgers and golden, crispy fries are coming to Luxe Latte. Perfect with a cold Luxe juice.</p>
+            <form class="notify" data-notify novalidate>
+              <div class="field">
+                <label class="sr-only" for="notify-contact">Phone or email</label>
+                <input id="notify-contact" name="contact" type="text" inputmode="email" autocomplete="tel" placeholder="Phone or email" required>
+              </div>
+              <button class="btn" type="submit">Notify me</button>
+            </form>
+            <p class="error" data-notify-error hidden style="color:var(--danger);margin-top:8px;font-size:14px"></p>
+            <p style="margin-top:18px"><a href="/eatery">Take a peek at what’s cooking →</a></p>
+          </div>
+          <div class="art" aria-hidden="true">
+            {{> burger-art}}
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  {{> footer}}
+  <script type="module" src="/js/home.js"></script>
+</body>
+</html>

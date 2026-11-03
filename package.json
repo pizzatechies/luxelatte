@@ -1,0 +1,19 @@
+{
+  "name": "luxe-latte",
+  "version": "1.0.0",
+  "description": "Luxe Latte coffee & juice joint: website with online ordering, M-Pesa Paybill payments and an order dashboard.",
+  "private": true,
+  "type": "module",
+  "main": "server.js",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning server.js",
+    "dev": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning --watch server.js",
+    "test": "node --disable-warning=ExperimentalWarning --test \"test/*.test.js\""
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

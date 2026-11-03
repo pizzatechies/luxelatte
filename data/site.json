@@ -1,0 +1,34 @@
+{
+  "name": "Luxe Latte",
+  "tagline": "Coffee & juice joint",
+  "currency": "KES",
+  "payment": {
+    "paybill": "714777",
+    "account": "0112542203",
+    "methods": {
+      "mpesa": true,
+      "counter": true
+    }
+  },
+  "orderTypes": {
+    "pickup": true,
+    "dinein": true,
+    "delivery": false
+  },
+  "deliveryFee": 100,
+  "pickupTimes": [0, 15, 30, 45, 60],
+  "contact": {
+    "phone": "",
+    "whatsapp": "",
+    "email": "",
+    "instagram": "",
+    "tiktok": "",
+    "address": "",
+    "mapUrl": ""
+  },
+  "hours": [],
+  "eatery": {
+    "headline": "Burgers & Fries",
+    "teaser": "Our kitchen is firing up. Stacked burgers and golden fries are coming to Luxe Latte soon."
+  }
+}

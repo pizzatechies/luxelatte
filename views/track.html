@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  {{> head}}
+  <title>Track your order | Luxe Latte</title>
+  <meta name="description" content="Check the status of your Luxe Latte order.">
+</head>
+<body>
+  {{> header}}
+
+  <main id="main" class="page">
+    <div class="order-wrap">
+      <h1 class="page-title">Track your order</h1>
+      <p class="muted" style="margin-bottom:28px">See where your drinks are at, from received to ready.</p>
+
+      <div class="card" data-recent-card hidden>
+        <h2>On this device</h2>
+        <p class="card__sub">Orders you’ve placed from this phone or computer.</p>
+        <ul class="recent-list" data-recent></ul>
+      </div>
+
+      <div class="card">
+        <h2>Find an order</h2>
+        <p class="card__sub">Use the order number on your tracking page and the phone number you ordered with.</p>
+        <form class="stack" data-lookup novalidate>
+          <div class="grid-2">
+            <div class="field">
+              <label for="number">Order number</label>
+              <input class="input" id="number" name="number" inputmode="numeric" placeholder="e.g. 1042" required>
+            </div>
+            <div class="field">
+              <label for="phone">Phone</label>
+              <input class="input" id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="0712 345 678" required>
+            </div>
+          </div>
+          <div class="form-error" data-lookup-error hidden role="alert"></div>
+          <button class="btn" type="submit">Find my order</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  {{> footer}}
+  <script type="module" src="/js/track.js"></script>
+</body>
+</html>

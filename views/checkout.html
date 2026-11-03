@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  {{> head}}
+  <title>Checkout | Luxe Latte</title>
+  <meta name="robots" content="noindex">
+</head>
+<body data-hide-cart-bar="1">
+  {{> header}}
+
+  <main id="main" class="page">
+    <div class="container">
+      <a class="back-link" href="/#menu">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+        Back to menu
+      </a>
+      <h1 class="page-title">Checkout</h1>
+      <p class="muted">Almost there. Tell us who it’s for and how you’d like it.</p>
+
+      <div data-checkout-empty hidden>
+        <div class="card" style="margin-top:28px;text-align:center">
+          <h2 style="margin-bottom:8px">Your cart is empty</h2>
+          <p class="muted" style="margin-bottom:20px">Add a coffee or a Luxe juice, then come back here to check out.</p>
+          <a class="btn" href="/#menu">Browse the menu</a>
+        </div>
+      </div>
+
+      <div class="status-banner" data-closed-banner hidden style="margin-top:24px"></div>
+
+      <div class="checkout" data-checkout hidden>
+        <form class="checkout__form" data-form novalidate>
+          <div class="card">
+            <fieldset class="stack">
+              <legend>Your details</legend>
+              <p class="card__sub" style="margin:0">So we know who to call when it’s ready.</p>
+              <div class="grid-2">
+                <div class="field" data-field="name">
+                  <label for="name">Name</label>
+                  <input class="input" id="name" name="name" autocomplete="name" placeholder="e.g. Wanjiru" required maxlength="60">
+                  <span class="error" hidden></span>
+                </div>
+                <div class="field" data-field="phone">
+                  <label for="phone">Phone</label>
+                  <input class="input" id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="0712 345 678" required>
+                  <span class="error" hidden></span>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="card">
+            <fieldset class="stack" data-field="orderType">
+              <legend>How would you like it?</legend>
+              <div class="choices" data-order-types></div>
+              <span class="error" hidden></span>
+              <div class="field" data-field="deliveryLocation" data-delivery hidden>
+                <label for="deliveryLocation">Delivery location</label>
+                <textarea class="input" id="deliveryLocation" name="deliveryLocation" placeholder="Building, floor, landmark…" maxlength="200"></textarea>
+                <span class="error" hidden></span>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="card">
+            <fieldset class="stack" data-field="readyIn">
+              <legend>When should it be ready?</legend>
+              <div class="choices choices--pills" data-times></div>
+              <span class="error" hidden></span>
+            </fieldset>
+          </div>
+
+          <div class="card">
+            <div class="field">
+              <label for="notes">Anything we should know? <span class="muted" style="font-weight:400">(optional)</span></label>
+              <textarea class="input" id="notes" name="notes" maxlength="300" placeholder="Less sugar, extra hot, no ice…"></textarea>
+            </div>
+          </div>
+
+          <div class="card">
+            <fieldset class="stack" data-field="paymentMethod">
+              <legend>Payment</legend>
+              <div class="choices" data-payments></div>
+              <span class="error" hidden></span>
+            </fieldset>
+          </div>
+
+          <div class="form-error" data-form-error hidden role="alert"></div>
+          <button class="btn btn--lg btn--block" type="submit" data-submit>Place order</button>
+          <p class="muted" style="font-size:13px;text-align:center">You’ll get a tracking page with your order number as soon as you place your order.</p>
+        </form>
+
+        <aside class="summary card" aria-labelledby="summary-title">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px">
+            <h2 id="summary-title">Your order</h2>
+            <button type="button" class="copy" data-open-cart>Edit</button>
+          </div>
+          <div class="summary__lines" data-summary-lines></div>
+          <div class="totals" data-totals></div>
+          <div class="paynote" data-paynote></div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  {{> footer}}
+  <script type="module" src="/js/checkout.js"></script>
+</body>
+</html>

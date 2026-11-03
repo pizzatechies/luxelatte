@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  {{> head}}
+  <title>Your order | Luxe Latte</title>
+  <meta name="robots" content="noindex">
+</head>
+<body>
+  {{> header}}
+
+  <main id="main" class="page">
+    <div class="order-wrap" data-order-root>
+      <div class="card"><div class="skeleton" style="height:180px"></div></div>
+      <div class="card"><div class="skeleton" style="height:240px"></div></div>
+    </div>
+  </main>
+
+  {{> footer}}
+  <script type="module" src="/js/order.js"></script>
+</body>
+</html>

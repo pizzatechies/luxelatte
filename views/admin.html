@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  {{> head}}
+  <link rel="stylesheet" href="/css/admin.css">
+  <title>Orders dashboard | Luxe Latte</title>
+  <meta name="robots" content="noindex, nofollow">
+</head>
+<body class="admin">
+  <!-- Sign in -->
+  <main class="a-login checker" data-login hidden>
+    <form class="a-login__card" data-login-form novalidate>
+      <img src="/img/logo.png" alt="Luxe Latte" width="150" height="94" style="margin:0 auto 8px">
+      <h1>Orders dashboard</h1>
+      <p class="muted">Staff only. Sign in to see and manage orders.</p>
+      <div class="field">
+        <label for="password">Password</label>
+        <input class="input" id="password" name="password" type="password" autocomplete="current-password" required autofocus>
+      </div>
+      <div class="form-error" data-login-error hidden role="alert"></div>
+      <button class="btn btn--block btn--lg" type="submit">Sign in</button>
+      <a href="/" class="muted" style="font-size:14px">← Back to the website</a>
+    </form>
+  </main>
+
+  <!-- Dashboard -->
+  <div data-dash hidden>
+    <header class="a-top">
+      <div class="a-top__inner">
+        <a class="brand" href="/" target="_blank" rel="noopener" aria-label="Open the website">
+          <img class="brand__mark" src="/img/logo-mark.png" alt="" width="36" height="36">
+          <span class="a-top__title">Orders</span>
+        </a>
+        <label class="switch" title="When off, the website stops taking online orders">
+          <input type="checkbox" data-accepting>
+          <span class="switch__track" aria-hidden="true"></span>
+          <span class="switch__label" data-accepting-label>Taking orders</span>
+        </label>
+        <div class="a-top__actions">
+          <button type="button" class="btn btn--sm btn--ghost" data-sound>Enable sound</button>
+          <button type="button" class="btn btn--sm btn--ghost" data-alerts hidden>Enable alerts</button>
+          <button type="button" class="btn btn--sm btn--ghost" data-logout>Sign out</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="a-main">
+      <section class="a-stats" aria-label="Today">
+        <div class="a-stat"><span>Orders today</span><strong data-stat="ordersToday">0</strong></div>
+        <div class="a-stat"><span>Paid today</span><strong data-stat="revenueToday">KES 0</strong></div>
+        <div class="a-stat"><span>Unpaid today</span><strong data-stat="unpaidToday">KES 0</strong></div>
+        <div class="a-stat a-stat--alert"><span>Payments to verify</span><strong data-stat="awaitingVerification">0</strong></div>
+      </section>
+
+      <nav class="a-tabs" role="tablist" aria-label="Dashboard sections">
+        <button role="tab" aria-selected="true" data-tab="live">Live orders <span class="a-count" data-live-count>0</span></button>
+        <button role="tab" aria-selected="false" data-tab="history">History</button>
+        <button role="tab" aria-selected="false" data-tab="menu">Menu</button>
+        <button role="tab" aria-selected="false" data-tab="waitlist">Eatery waitlist <span class="a-count" data-waitlist-count>0</span></button>
+      </nav>
+
+      <section data-panel="live">
+        <div class="a-board">
+          <div class="a-col" data-col="received"><h2>New <span data-col-count>0</span></h2><div class="a-col__list"></div></div>
+          <div class="a-col" data-col="preparing"><h2>Preparing <span data-col-count>0</span></h2><div class="a-col__list"></div></div>
+          <div class="a-col" data-col="ready"><h2>Ready <span data-col-count>0</span></h2><div class="a-col__list"></div></div>
+        </div>
+      </section>
+
+      <section data-panel="history" hidden>
+        <div class="a-table-wrap"><table class="a-table" data-history></table></div>
+      </section>
+
+      <section data-panel="menu" hidden>
+        <p class="muted" style="margin-bottom:16px">Mark items as sold out and they’ll be greyed out on the website straight away. To change names or prices, edit <code>data/menu.json</code>.</p>
+        <div class="a-menu" data-menu></div>
+      </section>
+
+      <section data-panel="waitlist" hidden>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap">
+          <p class="muted">People who asked to hear when Burgers &amp; Fries launches.</p>
+          <a class="btn btn--sm" href="/api/admin/waitlist.csv">Download CSV</a>
+        </div>
+        <div class="a-table-wrap"><table class="a-table" data-waitlist></table></div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="/js/admin.js"></script>
+</body>
+</html>

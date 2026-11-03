@@ -1,0 +1,268 @@
+{
+  "currency": "KES",
+  "categories": [
+    {
+      "id": "coffee",
+      "name": "Coffee",
+      "tagline": "Pulled fresh, cup after cup.",
+      "items": [
+        {
+          "id": "cappuccino",
+          "name": "Cappuccino",
+          "description": "Espresso under a deep cap of velvety steamed-milk foam.",
+          "art": "milk",
+          "color": "#c9a07f",
+          "sizes": [
+            {
+              "id": "regular",
+              "label": "Regular",
+              "price": 250
+            },
+            {
+              "id": "large",
+              "label": "Large",
+              "price": 300
+            }
+          ]
+        },
+        {
+          "id": "latte",
+          "name": "Latte",
+          "description": "Espresso with plenty of silky steamed milk and a light layer of foam.",
+          "art": "milk",
+          "color": "#d7b597",
+          "featured": true,
+          "sizes": [
+            {
+              "id": "regular",
+              "label": "Regular",
+              "price": 250
+            },
+            {
+              "id": "large",
+              "label": "Large",
+              "price": 300
+            }
+          ]
+        },
+        {
+          "id": "mocha",
+          "name": "Mocha",
+          "description": "Espresso, rich chocolate and steamed milk. Dessert in a cup.",
+          "art": "milk",
+          "color": "#7a4a33",
+          "sizes": [
+            {
+              "id": "regular",
+              "label": "Regular",
+              "price": 300
+            },
+            {
+              "id": "large",
+              "label": "Large",
+              "price": 350
+            }
+          ]
+        },
+        {
+          "id": "long-black",
+          "name": "Long Black",
+          "description": "A double shot of espresso poured over hot water. Bold and clean.",
+          "art": "black",
+          "color": "#3b2618",
+          "sizes": [
+            {
+              "id": "regular",
+              "label": "Regular",
+              "price": 200
+            },
+            {
+              "id": "large",
+              "label": "Large",
+              "price": 250
+            }
+          ]
+        },
+        {
+          "id": "espresso",
+          "name": "Espresso",
+          "description": "A short, intense shot crowned with golden crema.",
+          "art": "espresso",
+          "color": "#a0673a",
+          "sizes": [
+            {
+              "id": "single",
+              "label": "Single",
+              "price": 150
+            },
+            {
+              "id": "double",
+              "label": "Double",
+              "price": 200
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "juice",
+      "name": "Juices",
+      "tagline": "Bright, chilled and blended to order.",
+      "items": [
+        {
+          "id": "luxe-velvet",
+          "name": "Luxe Velvet",
+          "description": "Smooth, silky and deep: a juice that goes down like velvet.",
+          "art": "juice",
+          "color": "#b3263e",
+          "sizes": [
+            {
+              "id": "regular",
+              "label": "Regular",
+              "price": 150
+            },
+            {
+              "id": "large",
+              "label": "Large",
+              "price": 200
+            }
+          ]
+        },
+        {
+          "id": "luxe-royale",
+          "name": "Luxe Royale",
+          "description": "Full-bodied and fruity, fit for royalty.",
+          "art": "juice",
+          "color": "#d9572b",
+          "sizes": [
+            {
+              "id": "regular",
+              "label": "Regular",
+              "price": 150
+            },
+            {
+              "id": "large",
+              "label": "Large",
+              "price": 200
+            }
+          ]
+        },
+        {
+          "id": "luxe-sunrise",
+          "name": "Luxe Sunrise",
+          "description": "Bright and golden, the wake-up call in a cup.",
+          "art": "juice",
+          "color": "#f3a712",
+          "featured": true,
+          "sizes": [
+            {
+              "id": "regular",
+              "label": "Regular",
+              "price": 150
+            },
+            {
+              "id": "large",
+              "label": "Large",
+              "price": 200
+            }
+          ]
+        },
+        {
+          "id": "luxe-sunset",
+          "name": "Luxe Sunset",
+          "description": "Warm, mellow and sweet, like golden hour.",
+          "art": "juice",
+          "color": "#ee6c4d",
+          "sizes": [
+            {
+              "id": "regular",
+              "label": "Regular",
+              "price": 150
+            },
+            {
+              "id": "large",
+              "label": "Large",
+              "price": 200
+            }
+          ]
+        },
+        {
+          "id": "luxe-zing",
+          "name": "Luxe Zing",
+          "description": "Zesty and tangy with a lively kick.",
+          "art": "juice",
+          "color": "#8cbf3f",
+          "sizes": [
+            {
+              "id": "regular",
+              "label": "Regular",
+              "price": 150
+            },
+            {
+              "id": "large",
+              "label": "Large",
+              "price": 200
+            }
+          ]
+        },
+        {
+          "id": "luxe-tropical",
+          "name": "Luxe Tropical",
+          "description": "Island sunshine in every sip.",
+          "art": "juice",
+          "color": "#ffc93c",
+          "sizes": [
+            {
+              "id": "regular",
+              "label": "Regular",
+              "price": 150
+            },
+            {
+              "id": "large",
+              "label": "Large",
+              "price": 200
+            }
+          ]
+        },
+        {
+          "id": "luxe-purple-royale",
+          "name": "Luxe Purple Royale",
+          "description": "Deep purple, bold and fruity. Royalty, reimagined.",
+          "art": "juice",
+          "color": "#6a2c70",
+          "sizes": [
+            {
+              "id": "regular",
+              "label": "Regular",
+              "price": 150
+            },
+            {
+              "id": "large",
+              "label": "Large",
+              "price": 200
+            }
+          ]
+        },
+        {
+          "id": "luxe-grape-glow",
+          "name": "Luxe Grape Glow",
+          "description": "Juicy grape with a glow-up finish.",
+          "art": "juice",
+          "color": "#8e44ad",
+          "sizes": [
+            {
+              "id": "regular",
+              "label": "Regular",
+              "price": 150
+            },
+            {
+              "id": "large",
+              "label": "Large",
+              "price": 200
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
