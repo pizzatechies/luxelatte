@@ -1,0 +1,26 @@
+# One-click deploy on Render: Dashboard → New → Blueprint → pick this repo.
+services:
+  - type: web
+    name: luxe-latte
+    runtime: node
+    plan: starter            # needed for the persistent disk that stores orders
+    buildCommand: npm ci --omit=dev
+    startCommand: npm start
+    healthCheckPath: /api/site
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+      - key: TRUST_PROXY
+        value: "1"
+      - key: STORAGE_DIR
+        value: /var/data
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: ADMIN_PASSWORD
+        sync: false          # Render asks you to type this in during setup
+    disk:
+      name: luxe-data
+      mountPath: /var/data
+      sizeGB: 1
