@@ -1,4 +1,4 @@
-import { $, $$, esc, money, art, cart, getMenu, getSite, initChrome, initNotifyForms, toast, bumpCartButton, icons } from './lib.js';
+import { $, $$, esc, money, art, cart, getMenu, getSite, initChrome, initNotifyForms, toast, bumpCartButton, icons, link } from './lib.js';
 
 initChrome();
 initNotifyForms();
@@ -13,7 +13,7 @@ function renderMenu(menu) {
 
   boardsEl.innerHTML = menu.categories.map((cat) => `
     <section class="board" id="cat-${esc(cat.id)}" aria-labelledby="cat-${esc(cat.id)}-title">
-      <div class="board__badge"><img src="/img/logo-mark.png" alt="" width="50" height="50"></div>
+      <div class="board__badge"><img src="${link('/img/logo-mark.png')}" alt="" width="50" height="50"></div>
       <header class="board__head">
         <h3 id="cat-${esc(cat.id)}-title">${esc(cat.name)}</h3>
         <p>${esc(cat.tagline || '')}</p>

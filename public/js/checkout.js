@@ -1,4 +1,7 @@
-import { $, $$, esc, money, art, api, cart, getMenu, getSite, indexMenu, initChrome, myOrders, storage, icons } from './lib.js';
+import {
+  $, $$, esc, money, art, api, cart, getMenu, getSite, indexMenu, initChrome, myOrders, storage, icons,
+  STATIC, link, whatsappLink, copyBtn,
+} from './lib.js';
 
 initChrome();
 
@@ -51,8 +54,63 @@ function totals() {
   return { lines, subtotal, fee, total: subtotal + fee };
 }
 
+let placed = false;
+
+/** GitHub Pages version: no server, so the order is sent to the shop as a WhatsApp message. */
+function placeViaWhatsApp(v) {
+  const { lines, fee, total } = totals();
+  const ref = `LL-${Date.now().toString(36).slice(-5).toUpperCase()}`;
+  const p = site.payment;
+  const msg = [
+    `Hi Luxe Latte! New order ${ref}`,
+    '',
+    ...lines.map((l) => `${l.qty} × ${l.item.name} (${l.size.label}): ${money(l.lineTotal)}`),
+    fee ? `Delivery: ${money(fee)}` : null,
+    `*Total: ${money(total)}*`,
+    '',
+    `Name: ${v.name.trim()}`,
+    `Phone: ${v.phone.trim()}`,
+    `${ORDER_TYPES[v.orderType].label} · ${timeLabel(Number(v.readyIn))}`,
+    v.orderType === 'delivery' ? `Deliver to: ${v.deliveryLocation.trim()}` : null,
+    v.notes?.trim() ? `Notes: ${v.notes.trim()}` : null,
+    `Payment: ${v.paymentMethod === 'mpesa' ? `M-Pesa Paybill ${p.paybill}, Account ${p.account}` : 'At the counter'}`,
+  ].filter((x) => x !== null).join('\n');
+  const wa = whatsappLink(site, msg);
+
+  storage.set('ll_customer', { name: v.name.trim(), phone: v.phone.trim() });
+  placed = true;
+  cart.clear();
+
+  $('[data-checkout]').outerHTML = `
+    <div class="order-wrap" style="margin-top:28px;margin-inline:0;width:min(760px,100%)">
+      <div class="card order-hero">
+        <span class="eyebrow">Order ${esc(ref)}</span>
+        <div class="num" style="font-size:clamp(44px,8vw,72px)">Almost done!</div>
+        <p class="lead">Send your order to us on WhatsApp so we can start making it.</p>
+        <a class="btn btn--lg btn--ok btn--wrap" style="margin-top:22px;--bg:#25a244;--bd:#25a244" href="${esc(wa)}" target="_blank" rel="noopener">Send order on WhatsApp · ${money(total)}</a>
+        <p class="muted" style="font-size:13px;margin-top:12px">We’ll reply on WhatsApp to confirm and let you know when it’s ready.</p>
+      </div>
+      ${v.paymentMethod === 'mpesa' ? `
+      <div class="card">
+        <h2>Pay with M-Pesa</h2>
+        <p class="card__sub">Then send the M-Pesa confirmation message in the same WhatsApp chat.</p>
+        <ol class="pay-steps">
+          <li><div><span class="lbl">Open M-Pesa</span><span class="val">Lipa na M-Pesa → Pay Bill</span></div></li>
+          <li><div><span class="lbl">Business number</span><span class="val">${esc(p.paybill)}</span></div>${copyBtn(p.paybill)}</li>
+          <li><div><span class="lbl">Account number</span><span class="val">${esc(p.account)}</span></div>${copyBtn(p.account)}</li>
+          <li><div><span class="lbl">Amount</span><span class="val">${money(total)}</span></div>${copyBtn(String(total))}</li>
+          <li><div><span class="lbl">Enter your PIN and send</span><span class="val">Share the M-Pesa SMS with us on WhatsApp</span></div></li>
+        </ol>
+      </div>` : `
+      <div class="card"><div class="notice notice--info">${icons.info}<div>Pay <strong>${money(total)}</strong> at the counter when you collect, by cash or M-Pesa.</div></div></div>`}
+      <div class="order-actions"><a class="btn btn--ghost" href="${link('/#menu')}">Back to the menu</a></div>
+    </div>`;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.open(wa, '_blank', 'noopener');
+}
+
 function renderSummary() {
-  if (!site) return;
+  if (!site || placed) return;
   const { lines, subtotal, fee, total } = totals();
   const empty = lines.length === 0;
   $('[data-checkout]').hidden = empty;
@@ -115,6 +173,7 @@ form.addEventListener('submit', async (e) => {
   const errors = clientValidate(v);
   showErrors(errors);
   if (Object.keys(errors).length) return;
+  if (STATIC) return placeViaWhatsApp(v);
 
   submitBtn.classList.add('is-loading');
   submitBtn.innerHTML = '<span class="spinner" aria-hidden="true"></span> Placing your order…';

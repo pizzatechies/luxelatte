@@ -10,7 +10,31 @@ export function esc(value) {
 
 export const money = (n) => `KES ${Number(n || 0).toLocaleString('en-KE')}`;
 
+// Static mode = the GitHub Pages build: no server, orders are sent over WhatsApp.
+export const STATIC = document.documentElement.dataset.static === '1';
+export const BASE = document.documentElement.dataset.base || '';
+export const link = (p) => BASE + p;
+
+async function staticApi(path) {
+  const get = async (f) => (await fetch(link(`/data/${f}`))).json();
+  if (path === '/site') return { ...(await get('site.json')), acceptingOrders: true, closedMessage: '' };
+  if (path === '/menu') {
+    const menu = await get('menu.json');
+    menu.categories.forEach((c) => c.items.forEach((i) => { i.available = i.available !== false; }));
+    return menu;
+  }
+  throw Object.assign(new Error('Not available on this version of the site.'), { status: 404 });
+}
+
+/** wa.me link for the shop's WhatsApp number (Kenyan 07/01 numbers become 2547/2541). */
+export function whatsappLink(site, text) {
+  let n = String(site.contact?.whatsapp || '').replace(/\D/g, '');
+  if (n.startsWith('0')) n = '254' + n.slice(1);
+  return `https://wa.me/${n}?text=${encodeURIComponent(text)}`;
+}
+
 export async function api(path, { method = 'GET', body } = {}) {
+  if (STATIC) return staticApi(path);
   const res = await fetch(`/api${path}`, {
     method,
     headers: body ? { 'Content-Type': 'application/json' } : undefined,
@@ -333,7 +357,7 @@ function setupDrawer() {
     const body = $('[data-cart-body]');
     const foot = $('[data-cart-foot]');
     if (!lines.length) {
-      body.innerHTML = `<div class="cart-empty">${art({ art: 'milk', color: '#dcc1ae' })}<strong>Your cart is empty</strong><p>Pick a coffee or a Luxe juice to get started.</p><a class="btn btn--ghost btn--sm" href="/#menu" data-close-cart>Browse the menu</a></div>`;
+      body.innerHTML = `<div class="cart-empty">${art({ art: 'milk', color: '#dcc1ae' })}<strong>Your cart is empty</strong><p>Pick a coffee or a Luxe juice to get started.</p><a class="btn btn--ghost btn--sm" href="${link('/#menu')}" data-close-cart>Browse the menu</a></div>`;
       foot.innerHTML = '';
       return;
     }
@@ -357,7 +381,7 @@ function setupDrawer() {
     foot.innerHTML = `
       <div class="drawer__total"><span>Subtotal</span><strong>${money(total)}</strong></div>
       ${blocked ? '<p class="form-error" style="margin-bottom:12px">Remove sold-out items to continue.</p>' : ''}
-      <a class="btn btn--block btn--lg" href="/checkout" ${blocked ? 'aria-disabled="true" style="pointer-events:none;opacity:.5"' : ''}>Checkout ${icons.arrowRight}</a>`;
+      <a class="btn btn--block btn--lg" href="${link('/checkout')}" ${blocked ? 'aria-disabled="true" style="pointer-events:none;opacity:.5"' : ''}>Checkout ${icons.arrowRight}</a>`;
   };
 
   cart.onChange(render);
@@ -372,8 +396,17 @@ export function bumpCartButton() {
 // ---------- "Notify me" forms for the eatery waitlist ----------
 export function initNotifyForms() {
   $$('form[data-notify]').forEach((form) => {
+    if (STATIC) {
+      form.querySelector('.field').hidden = true;
+      form.querySelector('button[type="submit"]').textContent = 'Notify me on WhatsApp';
+    }
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      if (STATIC) {
+        const site = await getSite();
+        window.open(whatsappLink(site, 'Hi Luxe Latte! Please let me know when Burgers & Fries opens.'), '_blank', 'noopener');
+        return;
+      }
       const input = form.querySelector('input[name="contact"]');
       const btn = form.querySelector('button[type="submit"]');
       const errorEl = form.parentElement.querySelector('[data-notify-error]');
@@ -397,9 +430,9 @@ export function initNotifyForms() {
 
 /** Marks the current page's nav link. */
 function markNav() {
-  const path = location.pathname;
+  const path = location.pathname.slice(BASE.length).replace(/\/$/, '') || '/';
   $$('#nav a').forEach((a) => {
-    const href = a.getAttribute('href');
+    const href = a.getAttribute('href').slice(BASE.length);
     if (href === path || (href !== '/' && !href.startsWith('/#') && path.startsWith(href))) a.setAttribute('aria-current', 'page');
   });
 }
