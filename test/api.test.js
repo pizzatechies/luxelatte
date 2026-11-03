@@ -59,7 +59,17 @@ test('full order lifecycle', async () => {
     const created = await req('POST', '/api/orders', order);
     assert.equal(created.status, 201);
     const o = created.body.order;
-    assert.equal(o.total, 750, 'server prices: 2x300 + 150, ignoring client price');
+    assert.equal(o.total, 550, 'server prices: 2x200 + 150, ignoring client price');
+    assert.equal(o.deliveryFee, 0);
+
+    const delivered = await req('POST', '/api/orders', {
+      ...order, orderType: 'delivery', deliveryLocation: 'Kilimani, Argwings Kodhek Rd',
+      items: [{ itemId: 'latte', sizeId: 'large', qty: 1 }, { itemId: 'luxe-zing', sizeId: 'regular', qty: 3 }],
+    });
+    assert.equal(delivered.status, 201);
+    assert.equal(delivered.body.order.subtotal, 200 + 450);
+    assert.equal(delivered.body.order.deliveryFee, 150, '+50 per delivered juice, none on coffee');
+    assert.equal(delivered.body.order.total, 800);
     assert.equal(o.number, 1001);
     assert.match(o.customer.phone, /^071•+678$/);
 
@@ -75,7 +85,7 @@ test('full order lifecycle', async () => {
     assert.equal((await req('POST', '/api/admin/login', { password: 'secret' })).status, 200);
 
     const dash = await req('GET', '/api/admin/orders');
-    assert.equal(dash.body.active.length, 1);
+    assert.equal(dash.body.active.length, 2);
     assert.equal(dash.body.stats.awaitingVerification, 1);
 
     const id = dash.body.active[0].id;
@@ -93,7 +103,7 @@ test('rejects bad orders, sold-out items and paused ordering', async () => {
     assert.equal((await req('POST', '/api/orders', { ...order, items: [] })).status, 422);
     assert.equal((await req('POST', '/api/orders', { ...order, items: [{ itemId: 'pizza', sizeId: 'large', qty: 1 }] })).status, 422);
     assert.equal((await req('POST', '/api/orders', { ...order, phone: 'abc' })).body.fields.phone !== undefined, true);
-    assert.equal((await req('POST', '/api/orders', { ...order, orderType: 'delivery' })).status, 422, 'delivery disabled by default');
+    assert.equal((await req('POST', '/api/orders', { ...order, orderType: 'delivery' })).status, 422, 'delivery needs a location');
 
     await req('POST', '/api/admin/login', { password: 'secret' });
     await req('PATCH', '/api/admin/menu/latte', { available: false });

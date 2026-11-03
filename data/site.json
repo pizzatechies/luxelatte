@@ -13,10 +13,16 @@
   "orderTypes": {
     "pickup": true,
     "dinein": true,
-    "delivery": false
+    "delivery": true
   },
-  "deliveryFee": 100,
-  "pickupTimes": [0, 15, 30, 45, 60],
+  "deliveryFee": 0,
+  "pickupTimes": [
+    0,
+    15,
+    30,
+    45,
+    60
+  ],
   "contact": {
     "phone": "",
     "whatsapp": "0112542203",

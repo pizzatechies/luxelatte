@@ -89,6 +89,7 @@ export function validateOrder(body, { catalog, availability, site }) {
       unitPrice: size.price,
       qty: nextQty,
       lineTotal: size.price * nextQty,
+      deliverySurcharge: item.deliverySurcharge,
     });
   }
 
@@ -96,7 +97,11 @@ export function validateOrder(body, { catalog, availability, site }) {
 
   const lines = [...merged.values()];
   const subtotal = lines.reduce((sum, l) => sum + l.lineTotal, 0);
-  const deliveryFee = orderType === 'delivery' ? Number(site.deliveryFee) || 0 : 0;
+  // Delivery = flat fee (site.json) + per-drink surcharge for categories that set one (juices: +50 each).
+  const deliveryFee = orderType === 'delivery'
+    ? (Number(site.deliveryFee) || 0) + lines.reduce((sum, l) => sum + l.deliverySurcharge * l.qty, 0)
+    : 0;
+  for (const l of lines) delete l.deliverySurcharge;
 
   return {
     ok: true,

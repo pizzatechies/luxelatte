@@ -30,7 +30,7 @@ const choice = (name, value, title, hint, checked) => `
 function renderChoices() {
   const types = Object.keys(ORDER_TYPES).filter((t) => site.orderTypes[t]);
   $('[data-order-types]').innerHTML = types
-    .map((t, i) => choice('orderType', t, ORDER_TYPES[t].label, t === 'delivery' && site.deliveryFee ? `${ORDER_TYPES[t].hint} (+${money(site.deliveryFee)})` : ORDER_TYPES[t].hint, i === 0))
+    .map((t, i) => choice('orderType', t, ORDER_TYPES[t].label, t === 'delivery' ? deliveryHint() : ORDER_TYPES[t].hint, i === 0))
     .join('');
   $('[data-times]').innerHTML = site.pickupTimes.map((m, i) => choice('readyIn', m, timeLabel(m), '', i === 0)).join('');
   const pays = Object.keys(PAYMENTS).filter((p) => site.payment.methods[p]);
@@ -45,12 +45,22 @@ function renderChoices() {
   }
 }
 
+/** e.g. "We bring it to you · juices +KES 50 each" (surcharges come from menu.json categories). */
+function deliveryHint() {
+  const parts = [ORDER_TYPES.delivery.hint];
+  if (Number(site.deliveryFee)) parts.push(`+${money(site.deliveryFee)}`);
+  const juice = [...menuIndex.values()].find((i) => i.deliverySurcharge);
+  if (juice) parts.push(`juices +${money(juice.deliverySurcharge)} each`);
+  return parts.join(' · ');
+}
+
 const values = () => Object.fromEntries(new FormData(form).entries());
 
 function totals() {
   const lines = cart.resolve(menuIndex);
   const subtotal = lines.reduce((s, l) => s + l.lineTotal, 0);
-  const fee = values().orderType === 'delivery' ? Number(site.deliveryFee) || 0 : 0;
+  const extras = lines.reduce((n, l) => n + l.item.deliverySurcharge * l.qty, 0);
+  const fee = values().orderType === 'delivery' ? (Number(site.deliveryFee) || 0) + extras : 0;
   return { lines, subtotal, fee, total: subtotal + fee };
 }
 
@@ -109,6 +119,11 @@ function placeViaWhatsApp(v) {
   window.open(wa, '_blank', 'noopener');
 }
 
+function deliveryNote(lines) {
+  const n = lines.filter((l) => l.item.deliverySurcharge).reduce((c, l) => c + l.qty, 0);
+  return n ? ` <small>(${n} juice${n === 1 ? '' : 's'} × ${money(lines.find((l) => l.item.deliverySurcharge).item.deliverySurcharge)})</small>` : '';
+}
+
 function renderSummary() {
   if (!site || placed) return;
   const { lines, subtotal, fee, total } = totals();
@@ -129,7 +144,7 @@ function renderSummary() {
 
   $('[data-totals]').innerHTML = `
     <div><span class="muted">Subtotal</span><span>${money(subtotal)}</span></div>
-    ${fee ? `<div><span class="muted">Delivery</span><span>${money(fee)}</span></div>` : ''}
+    ${fee ? `<div><span class="muted">Delivery${deliveryNote(lines)}</span><span>${money(fee)}</span></div>` : ''}
     <div class="grand"><span>Total</span><span>${money(total)}</span></div>`;
 
   const method = values().paymentMethod;

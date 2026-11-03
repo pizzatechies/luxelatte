@@ -144,7 +144,9 @@ export const getMenu = (fresh = false) => {
 };
 export function indexMenu(menu) {
   const map = new Map();
-  for (const cat of menu.categories) for (const item of cat.items) map.set(item.id, { ...item, category: cat.id });
+  for (const cat of menu.categories) {
+    for (const item of cat.items) map.set(item.id, { ...item, category: cat.id, deliverySurcharge: Number(cat.deliverySurcharge) || 0 });
+  }
   return map;
 }
 

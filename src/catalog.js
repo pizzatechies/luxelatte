@@ -11,7 +11,7 @@ export function createCatalog(menu) {
   for (const cat of menu.categories) {
     for (const item of cat.items) {
       if (items.has(item.id)) throw new Error(`Duplicate menu item id: ${item.id}`);
-      items.set(item.id, { ...item, category: cat.id });
+      items.set(item.id, { ...item, category: cat.id, deliverySurcharge: Number(cat.deliverySurcharge) || 0 });
     }
   }
   return {

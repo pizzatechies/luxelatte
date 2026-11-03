@@ -37,6 +37,8 @@ Run the tests with `npm test`.
 | Logo files | `public/img/logo*.png` |
 | Page text | `views/*.html` |
 
+A category can set `"deliverySurcharge"` in `menu.json` (juices are +50 each when delivered); `deliveryFee` in `site.json` adds a flat fee on top (currently 0).
+
 Restart the server after editing these files. Contact details and hours stay hidden until you fill them in. Hours format: `"hours": [{ "days": "Mon – Sat", "time": "7am – 8pm" }]`.
 
 Marking an item as sold out or pausing online orders is done in the dashboard and takes effect straight away.

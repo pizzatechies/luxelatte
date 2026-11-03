@@ -37,7 +37,7 @@ function renderMenu(menu) {
             </div>
           </li>`).join('')}
       </ul>
-      <p class="board__hint">${icons.info}<span>Prices in KES. Tap a price to add.</span></p>
+      <p class="board__hint">${icons.info}<span>Prices in KES. Tap a price to add.${cat.deliverySurcharge ? ` Delivered ${esc(cat.name.toLowerCase())} +${cat.deliverySurcharge} each.` : ''}</span></p>
     </section>`).join('');
 
   syncBadges();
