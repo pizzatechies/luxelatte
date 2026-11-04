@@ -104,6 +104,9 @@ test('rejects bad orders, sold-out items and paused ordering', async () => {
     assert.equal((await req('POST', '/api/orders', { ...order, items: [{ itemId: 'pizza', sizeId: 'large', qty: 1 }] })).status, 422);
     assert.equal((await req('POST', '/api/orders', { ...order, phone: 'abc' })).body.fields.phone !== undefined, true);
     assert.equal((await req('POST', '/api/orders', { ...order, orderType: 'delivery' })).status, 422, 'delivery needs a location');
+    const cashDelivery = await req('POST', '/api/orders', { ...order, orderType: 'delivery', deliveryLocation: 'Kilimani', paymentMethod: 'counter' });
+    assert.equal(cashDelivery.status, 422, 'no cash on delivery');
+    assert.match(cashDelivery.body.fields.paymentMethod, /M-Pesa/);
 
     await req('POST', '/api/admin/login', { password: 'secret' });
     await req('PATCH', '/api/admin/menu/latte', { available: false });

@@ -64,6 +64,9 @@ export function validateOrder(body, { catalog, availability, site }) {
 
   const paymentMethod = str(b.paymentMethod);
   if (!site.payment.methods[paymentMethod]) errors.paymentMethod = 'Please choose a payment method.';
+  else if (orderType === 'delivery' && paymentMethod !== 'mpesa') {
+    errors.paymentMethod = 'Delivery orders must be paid with M-Pesa.';
+  }
 
   const merged = new Map();
   const items = Array.isArray(b.items) ? b.items : [];

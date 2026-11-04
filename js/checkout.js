@@ -190,8 +190,24 @@ function clientValidate(v) {
   return errors;
 }
 
+/** Delivery orders are M-Pesa only: hide "Pay at the counter" and switch to M-Pesa. */
+function syncPaymentForType() {
+  const delivery = values().orderType === 'delivery';
+  const counter = form.querySelector('input[name="paymentMethod"][value="counter"]');
+  const mpesa = form.querySelector('input[name="paymentMethod"][value="mpesa"]');
+  if (counter) {
+    counter.disabled = delivery;
+    counter.closest('.choice').hidden = delivery;
+    if (delivery && counter.checked && mpesa) mpesa.checked = true;
+  }
+  $('[data-delivery-pay-note]').hidden = !delivery;
+}
+
 form.addEventListener('change', (e) => {
-  if (e.target.name === 'orderType') $('[data-delivery]').hidden = e.target.value !== 'delivery';
+  if (e.target.name === 'orderType') {
+    $('[data-delivery]').hidden = e.target.value !== 'delivery';
+    syncPaymentForType();
+  }
   renderSummary();
 });
 
@@ -242,6 +258,7 @@ Promise.all([getSite(), getMenu()])
     site = s;
     menuIndex = indexMenu(menu);
     renderChoices();
+    syncPaymentForType();
     renderSummary();
     if (!site.acceptingOrders) {
       const banner = $('[data-closed-banner]');
