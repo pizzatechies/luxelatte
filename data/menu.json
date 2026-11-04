@@ -5,6 +5,7 @@
       "id": "coffee",
       "name": "Coffee",
       "tagline": "Pulled fresh, cup after cup.",
+      "deliverySurcharge": 50,
       "items": [
         {
           "id": "cappuccino",

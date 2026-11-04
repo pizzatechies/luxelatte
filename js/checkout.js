@@ -49,8 +49,18 @@ function renderChoices() {
 function deliveryHint() {
   const parts = [ORDER_TYPES.delivery.hint];
   if (Number(site.deliveryFee)) parts.push(`+${money(site.deliveryFee)}`);
-  const juice = [...menuIndex.values()].find((i) => i.deliverySurcharge);
-  if (juice) parts.push(`juices +${money(juice.deliverySurcharge)} each`);
+  // e.g. "drinks +KES 50 each" (one note per surcharge amount, naming the categories it applies to)
+  const byAmount = new Map();
+  for (const i of menuIndex.values()) {
+    if (!i.deliverySurcharge) continue;
+    const names = byAmount.get(i.deliverySurcharge) ?? new Set();
+    names.add(i.category);
+    byAmount.set(i.deliverySurcharge, names);
+  }
+  for (const [amount, cats] of byAmount) {
+    const label = cats.has('coffee') && cats.has('juice') && cats.size === 2 ? 'drinks' : [...cats].join(' & ');
+    parts.push(`${label} +${money(amount)} each`);
+  }
   return parts.join(' · ');
 }
 
@@ -120,8 +130,13 @@ function placeViaWhatsApp(v) {
 }
 
 function deliveryNote(lines) {
-  const n = lines.filter((l) => l.item.deliverySurcharge).reduce((c, l) => c + l.qty, 0);
-  return n ? ` <small>(${n} juice${n === 1 ? '' : 's'} × ${money(lines.find((l) => l.item.deliverySurcharge).item.deliverySurcharge)})</small>` : '';
+  const charged = lines.filter((l) => l.item.deliverySurcharge);
+  const n = charged.reduce((c, l) => c + l.qty, 0);
+  if (!n) return '';
+  const amounts = new Set(charged.map((l) => l.item.deliverySurcharge));
+  return amounts.size === 1
+    ? ` <small>(${n} drink${n === 1 ? '' : 's'} × ${money([...amounts][0])})</small>`
+    : ` <small>(${n} drink${n === 1 ? '' : 's'})</small>`;
 }
 
 function renderSummary() {

@@ -68,8 +68,8 @@ test('full order lifecycle', async () => {
     });
     assert.equal(delivered.status, 201);
     assert.equal(delivered.body.order.subtotal, 200 + 450);
-    assert.equal(delivered.body.order.deliveryFee, 150, '+50 per delivered juice, none on coffee');
-    assert.equal(delivered.body.order.total, 800);
+    assert.equal(delivered.body.order.deliveryFee, 200, '+50 per delivered coffee and juice');
+    assert.equal(delivered.body.order.total, 850);
     assert.equal(o.number, 1001);
     assert.match(o.customer.phone, /^071•+678$/);
 
