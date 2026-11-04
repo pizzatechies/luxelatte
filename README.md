@@ -65,6 +65,10 @@ Any host that runs Node works (Render, Railway, Fly.io, a VPS). Set these enviro
 
 A `Dockerfile` is included. On free tiers without a persistent disk, orders are wiped whenever the server restarts, so attach a volume.
 
+## GitHub Pages version
+
+https://pizzatechies.github.io/luxelatte/ is a static copy of the site where checkout sends the order over WhatsApp (no dashboard or live tracking). After changing the menu or pages, run `npm run build:pages` and commit. That refreshes the copy at the repo root (`index.html`, `css/`, `js/`, `img/`, `checkout/`, `eatery/`), which GitHub serves while Pages is set to "Deploy from a branch". If you switch Pages to "GitHub Actions" (Settings → Pages → Source), the workflow builds it for you and those root copies can be deleted.
+
 ## Project layout
 
 ```

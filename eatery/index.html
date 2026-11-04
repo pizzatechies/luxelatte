@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en" data-static="1" data-base="/luxelatte">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#fffaf2">
+  <link rel="icon" type="image/png" href="/luxelatte/img/favicon.png">
+  <link rel="apple-touch-icon" href="/luxelatte/img/apple-touch-icon.png">
+  <link rel="manifest" href="/luxelatte/manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Poppins:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="/luxelatte/css/style.css">
+
+  <title>Burgers &amp; Fries, Coming Soon | Luxe Latte</title>
+  <meta name="description" content="Luxe Latte’s eatery is coming soon: stacked burgers and golden fries. Join the list to hear first.">
+  <meta property="og:title" content="Burgers & Fries: coming soon to Luxe Latte">
+  <meta property="og:image" content="/img/logo.png">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="/luxelatte/" aria-label="Luxe Latte, home">
+        <img class="brand__mark" src="/luxelatte/img/logo-mark.png" alt="" width="42" height="42">
+        <img class="brand__word" src="/luxelatte/img/logo-wordmark.png" alt="Luxe Latte" width="124" height="15">
+      </a>
+      <button class="icon-btn menu-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open navigation">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <nav class="nav" id="nav" aria-label="Main">
+        <a href="/luxelatte/#menu">Menu</a>
+        <a href="/luxelatte/eatery">Eatery <span class="pill-soon">Soon</span></a>
+      </nav>
+      <button class="cart-btn" type="button" data-open-cart aria-label="Open cart">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+        <span class="cart-btn__label">Cart</span>
+        <span class="cart-btn__count" data-cart-count>0</span>
+      </button>
+    </div>
+  </header>
+
+
+  <main id="main" class="soon checker">
+    <section class="soon__card" aria-labelledby="soon-title">
+      <div>
+        <span class="eyebrow">Coming soon · The eatery</span>
+        <h1 id="soon-title">Burgers &amp; Fries</h1>
+        <p class="lead">Our kitchen is firing up. Stacked, juicy burgers and golden, crispy fries are on their way to Luxe Latte. Be the first to know when we open the grill.</p>
+
+        <form class="notify" data-notify novalidate>
+          <div class="field">
+            <label class="sr-only" for="notify-contact">Phone or email</label>
+            <input id="notify-contact" name="contact" type="text" inputmode="email" autocomplete="tel" placeholder="Phone or email" required>
+          </div>
+          <button class="btn" type="submit">Notify me</button>
+        </form>
+        <p class="error" data-notify-error hidden style="color:var(--danger);margin-top:8px;font-size:14px"></p>
+
+        <div class="soon__feats">
+          <div class="soon__feat"><strong>Burgers</strong><span>Stacked high and made to order.</span></div>
+          <div class="soon__feat"><strong>Fries</strong><span>Golden, crispy and generously salted.</span></div>
+          <div class="soon__feat"><strong>Perfect pairing</strong><span>With a chilled Luxe juice, obviously.</span></div>
+        </div>
+
+        <p class="soon__more">Thirsty while you wait? <a href="/luxelatte/#menu">Order a coffee or juice →</a></p>
+      </div>
+      <div class="soon__art" aria-hidden="true">
+        <svg viewBox="0 0 420 360" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="210" cy="330" rx="180" ry="18" fill="#ead6c3"/>
+              <!-- fries -->
+              <g transform="translate(250 90)">
+                <g fill="#f3b23a" stroke="#c98a1c" stroke-width="3">
+                  <rect x="18" y="-20" width="18" height="120" rx="5" transform="rotate(-10 27 40)"/>
+                  <rect x="44" y="-40" width="18" height="140" rx="5" transform="rotate(-3 53 30)"/>
+                  <rect x="70" y="-30" width="18" height="130" rx="5" transform="rotate(5 79 35)"/>
+                  <rect x="96" y="-14" width="18" height="114" rx="5" transform="rotate(12 105 43)"/>
+                  <rect x="32" y="-8" width="18" height="110" rx="5" transform="rotate(4 41 47)"/>
+                  <rect x="82" y="-2" width="18" height="104" rx="5" transform="rotate(-6 91 50)"/>
+                </g>
+                <path d="M0 60 L136 60 L120 236 Q118 246 108 246 L28 246 Q18 246 16 236 Z" fill="#8a5d3a"/>
+                <path d="M0 60 Q68 96 136 60" fill="#744b2d"/>
+                <image href="/luxelatte/img/logo-mark-cream.png" x="40" y="118" width="56" height="56"/>
+              </g>
+              <!-- burger -->
+              <g transform="translate(30 120)">
+                <path d="M10 108 Q10 20 120 20 Q230 20 230 108 Z" fill="#d8913f"/>
+                <path d="M30 70 Q60 30 120 30" stroke="#f0b56a" stroke-width="10" stroke-linecap="round" fill="none" opacity=".7"/>
+                <g fill="#fff6e6">
+                  <ellipse cx="70" cy="62" rx="6" ry="3.5" transform="rotate(-20 70 62)"/>
+                  <ellipse cx="110" cy="46" rx="6" ry="3.5"/>
+                  <ellipse cx="150" cy="56" rx="6" ry="3.5" transform="rotate(20 150 56)"/>
+                  <ellipse cx="185" cy="80" rx="6" ry="3.5" transform="rotate(25 185 80)"/>
+                  <ellipse cx="128" cy="80" rx="6" ry="3.5" transform="rotate(-10 128 80)"/>
+                  <ellipse cx="88" cy="88" rx="6" ry="3.5" transform="rotate(15 88 88)"/>
+                </g>
+                <path d="M2 116 q14 -16 28 0 q14 -16 28 0 q14 -16 28 0 q14 -16 28 0 q14 -16 28 0 q14 -16 28 0 q14 -16 28 0 q14 -16 28 0 q14 -16 28 0 L240 126 L2 126 Z" fill="#7cb342"/>
+                <path d="M6 120 H234 L210 150 L180 124 L150 152 L120 124 Z" fill="#ffc93c"/>
+                <rect x="4" y="124" width="232" height="38" rx="19" fill="#5a3522"/>
+                <path d="M18 136 h40 M80 146 h50 M150 134 h60" stroke="#744b2d" stroke-width="4" stroke-linecap="round"/>
+                <path d="M14 170 H226 Q226 206 190 206 H50 Q14 206 14 170 Z" fill="#d8913f"/>
+              </g>
+            </svg>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <img class="footer__logo" src="/luxelatte/img/logo-cream.png" alt="Luxe Latte" width="150" height="94" loading="lazy">
+          <p>Coffee &amp; juice, made luxe. Order ahead, pay with M-Pesa and skip the queue.</p>
+        </div>
+        <div class="footer__col">
+          <h3>Explore</h3>
+          <ul>
+            <li><a href="/luxelatte/#menu">Menu</a></li>
+            <li><a href="/luxelatte/checkout">Checkout</a></li>
+            <li><a href="/luxelatte/eatery">Burgers &amp; Fries (soon)</a></li>
+            <li><a href="/luxelatte/img/juice-menu.jpg" target="_blank" rel="noopener">Download juice menu</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h3>Lipa na M-Pesa</h3>
+          <p class="footer__pay">Paybill: <span data-paybill>714777</span><br>Account: <span data-account>0112542203</span></p>
+        </div>
+        <div class="footer__col" data-footer-contact hidden></div>
+        <div class="footer__col" data-footer-hours hidden></div>
+      </div>
+      <div class="footer__bottom">
+        <span>© <span data-year>2026</span> Luxe Latte. All rights reserved.</span>
+        <span>Brewed with love.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/luxelatte/js/eatery.js"></script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en" data-static="1" data-base="/luxelatte">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#fffaf2">
+  <link rel="icon" type="image/png" href="/luxelatte/img/favicon.png">
+  <link rel="apple-touch-icon" href="/luxelatte/img/apple-touch-icon.png">
+  <link rel="manifest" href="/luxelatte/manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Poppins:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="/luxelatte/css/style.css">
+
+  <title>Page not found | Luxe Latte</title>
+  <meta name="robots" content="noindex">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="/luxelatte/" aria-label="Luxe Latte, home">
+        <img class="brand__mark" src="/luxelatte/img/logo-mark.png" alt="" width="42" height="42">
+        <img class="brand__word" src="/luxelatte/img/logo-wordmark.png" alt="Luxe Latte" width="124" height="15">
+      </a>
+      <button class="icon-btn menu-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open navigation">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <nav class="nav" id="nav" aria-label="Main">
+        <a href="/luxelatte/#menu">Menu</a>
+        <a href="/luxelatte/eatery">Eatery <span class="pill-soon">Soon</span></a>
+      </nav>
+      <button class="cart-btn" type="button" data-open-cart aria-label="Open cart">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+        <span class="cart-btn__label">Cart</span>
+        <span class="cart-btn__count" data-cart-count>0</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main" class="notfound">
+    <div>
+      <h1>Spilled it.</h1>
+      <p>We couldn’t find that page. Let’s get you back to the good stuff.</p>
+      <a class="btn btn--lg" href="/luxelatte/">Back to Luxe Latte</a>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <img class="footer__logo" src="/luxelatte/img/logo-cream.png" alt="Luxe Latte" width="150" height="94" loading="lazy">
+          <p>Coffee &amp; juice, made luxe. Order ahead, pay with M-Pesa and skip the queue.</p>
+        </div>
+        <div class="footer__col">
+          <h3>Explore</h3>
+          <ul>
+            <li><a href="/luxelatte/#menu">Menu</a></li>
+            <li><a href="/luxelatte/checkout">Checkout</a></li>
+            <li><a href="/luxelatte/eatery">Burgers &amp; Fries (soon)</a></li>
+            <li><a href="/luxelatte/img/juice-menu.jpg" target="_blank" rel="noopener">Download juice menu</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h3>Lipa na M-Pesa</h3>
+          <p class="footer__pay">Paybill: <span data-paybill>714777</span><br>Account: <span data-account>0112542203</span></p>
+        </div>
+        <div class="footer__col" data-footer-contact hidden></div>
+        <div class="footer__col" data-footer-hours hidden></div>
+      </div>
+      <div class="footer__bottom">
+        <span>© <span data-year>2026</span> Luxe Latte. All rights reserved.</span>
+        <span>Brewed with love.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/luxelatte/js/eatery.js"></script>
+</body>
+</html>

@@ -11,7 +11,8 @@
   "scripts": {
     "start": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning server.js",
     "dev": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning --watch server.js",
-    "test": "node --disable-warning=ExperimentalWarning --test \"test/*.test.js\""
+    "test": "node --disable-warning=ExperimentalWarning --test \"test/*.test.js\"",
+    "build:pages": "node scripts/build-static.js --base /luxelatte && node scripts/sync-pages-root.js"
   },
   "dependencies": {
     "express": "^5.2.1"

@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en" data-static="1" data-base="/luxelatte">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#fffaf2">
+  <link rel="icon" type="image/png" href="/luxelatte/img/favicon.png">
+  <link rel="apple-touch-icon" href="/luxelatte/img/apple-touch-icon.png">
+  <link rel="manifest" href="/luxelatte/manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Poppins:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="/luxelatte/css/style.css">
+
+  <title>Checkout | Luxe Latte</title>
+  <meta name="robots" content="noindex">
+</head>
+<body data-hide-cart-bar="1">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="/luxelatte/" aria-label="Luxe Latte, home">
+        <img class="brand__mark" src="/luxelatte/img/logo-mark.png" alt="" width="42" height="42">
+        <img class="brand__word" src="/luxelatte/img/logo-wordmark.png" alt="Luxe Latte" width="124" height="15">
+      </a>
+      <button class="icon-btn menu-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open navigation">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <nav class="nav" id="nav" aria-label="Main">
+        <a href="/luxelatte/#menu">Menu</a>
+        <a href="/luxelatte/eatery">Eatery <span class="pill-soon">Soon</span></a>
+      </nav>
+      <button class="cart-btn" type="button" data-open-cart aria-label="Open cart">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+        <span class="cart-btn__label">Cart</span>
+        <span class="cart-btn__count" data-cart-count>0</span>
+      </button>
+    </div>
+  </header>
+
+
+  <main id="main" class="page">
+    <div class="container">
+      <a class="back-link" href="/luxelatte/#menu">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+        Back to menu
+      </a>
+      <h1 class="page-title">Checkout</h1>
+      <p class="muted">Almost there. Tell us who it’s for and how you’d like it.</p>
+
+      <div data-checkout-empty hidden>
+        <div class="card" style="margin-top:28px;text-align:center">
+          <h2 style="margin-bottom:8px">Your cart is empty</h2>
+          <p class="muted" style="margin-bottom:20px">Add a coffee or a Luxe juice, then come back here to check out.</p>
+          <a class="btn" href="/luxelatte/#menu">Browse the menu</a>
+        </div>
+      </div>
+
+      <div class="status-banner" data-closed-banner hidden style="margin-top:24px"></div>
+
+      <div class="checkout" data-checkout hidden>
+        <form class="checkout__form" data-form novalidate>
+          <div class="card">
+            <fieldset class="stack">
+              <legend>Your details</legend>
+              <p class="card__sub" style="margin:0">So we know who to call when it’s ready.</p>
+              <div class="grid-2">
+                <div class="field" data-field="name">
+                  <label for="name">Name</label>
+                  <input class="input" id="name" name="name" autocomplete="name" placeholder="e.g. Wanjiru" required maxlength="60">
+                  <span class="error" hidden></span>
+                </div>
+                <div class="field" data-field="phone">
+                  <label for="phone">Phone</label>
+                  <input class="input" id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="0712 345 678" required>
+                  <span class="error" hidden></span>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="card">
+            <fieldset class="stack" data-field="orderType">
+              <legend>How would you like it?</legend>
+              <div class="choices" data-order-types></div>
+              <span class="error" hidden></span>
+              <div class="field" data-field="deliveryLocation" data-delivery hidden>
+                <label for="deliveryLocation">Delivery location</label>
+                <textarea class="input" id="deliveryLocation" name="deliveryLocation" placeholder="Building, floor, landmark…" maxlength="200"></textarea>
+                <span class="error" hidden></span>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="card">
+            <fieldset class="stack" data-field="readyIn">
+              <legend>When should it be ready?</legend>
+              <div class="choices choices--pills" data-times></div>
+              <span class="error" hidden></span>
+            </fieldset>
+          </div>
+
+          <div class="card">
+            <div class="field">
+              <label for="notes">Anything we should know? <span class="muted" style="font-weight:400">(optional)</span></label>
+              <textarea class="input" id="notes" name="notes" maxlength="300" placeholder="Less sugar, extra hot, no ice…"></textarea>
+            </div>
+          </div>
+
+          <div class="card">
+            <fieldset class="stack" data-field="paymentMethod">
+              <legend>Payment</legend>
+              <div class="choices" data-payments></div>
+              <span class="error" hidden></span>
+            </fieldset>
+          </div>
+
+          <div class="form-error" data-form-error hidden role="alert"></div>
+          <button class="btn btn--lg btn--block" type="submit" data-submit>Place order</button>
+          <p class="muted" style="font-size:13px;text-align:center">You’ll get a tracking page with your order number as soon as you place your order.</p>
+        </form>
+
+        <aside class="summary card" aria-labelledby="summary-title">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px">
+            <h2 id="summary-title">Your order</h2>
+            <button type="button" class="copy" data-open-cart>Edit</button>
+          </div>
+          <div class="summary__lines" data-summary-lines></div>
+          <div class="totals" data-totals></div>
+          <div class="paynote" data-paynote></div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <img class="footer__logo" src="/luxelatte/img/logo-cream.png" alt="Luxe Latte" width="150" height="94" loading="lazy">
+          <p>Coffee &amp; juice, made luxe. Order ahead, pay with M-Pesa and skip the queue.</p>
+        </div>
+        <div class="footer__col">
+          <h3>Explore</h3>
+          <ul>
+            <li><a href="/luxelatte/#menu">Menu</a></li>
+            <li><a href="/luxelatte/checkout">Checkout</a></li>
+            <li><a href="/luxelatte/eatery">Burgers &amp; Fries (soon)</a></li>
+            <li><a href="/luxelatte/img/juice-menu.jpg" target="_blank" rel="noopener">Download juice menu</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h3>Lipa na M-Pesa</h3>
+          <p class="footer__pay">Paybill: <span data-paybill>714777</span><br>Account: <span data-account>0112542203</span></p>
+        </div>
+        <div class="footer__col" data-footer-contact hidden></div>
+        <div class="footer__col" data-footer-hours hidden></div>
+      </div>
+      <div class="footer__bottom">
+        <span>© <span data-year>2026</span> Luxe Latte. All rights reserved.</span>
+        <span>Brewed with love.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/luxelatte/js/checkout.js"></script>
+</body>
+</html>
