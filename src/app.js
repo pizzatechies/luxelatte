@@ -4,11 +4,12 @@ import {
 } from './validate.js';
 import { createAdminAuth, rateLimit, securityHeaders, newOrderToken } from './security.js';
 import { createPages } from './pages.js';
+import { parseStkCallback, stkFailureMessage } from './mpesa.js';
 
 /**
  * Builds the Express app. Everything it needs is injected so tests can run it against an in-memory DB.
  */
-export function createApp({ store, catalog, site, publicDir, viewsDir, cachePages = true, adminPassword, sessionSecret, tzOffsetMinutes = 180, trustProxy = false }) {
+export function createApp({ store, catalog, site, publicDir, viewsDir, cachePages = true, mpesa = null, adminPassword, sessionSecret, tzOffsetMinutes = 180, trustProxy = false }) {
   const app = express();
   const auth = createAdminAuth({ password: adminPassword, secret: sessionSecret });
 
@@ -34,7 +35,12 @@ export function createApp({ store, catalog, site, publicDir, viewsDir, cachePage
     readyIn: o.readyIn,
     deliveryLocation: o.deliveryLocation,
     notes: o.notes,
-    payment: { method: o.payment.method, status: o.payment.status, mpesaCode: o.payment.mpesaCode },
+    payment: {
+      method: o.payment.method,
+      status: o.payment.status,
+      mpesaCode: o.payment.mpesaCode,
+      stk: o.payment.stk ? { status: o.payment.stk.status, message: o.payment.stk.message, phone: maskPhone(o.payment.stk.phone || '') } : null,
+    },
     items: o.items,
     subtotal: o.subtotal,
     deliveryFee: o.deliveryFee,
@@ -51,7 +57,7 @@ export function createApp({ store, catalog, site, publicDir, viewsDir, cachePage
   const api = express.Router();
 
   api.get('/site', (req, res) => {
-    res.json({ ...site, acceptingOrders: acceptingOrders(), closedMessage: closedMessage() });
+    res.json({ ...site, acceptingOrders: acceptingOrders(), closedMessage: closedMessage(), stkEnabled: !!mpesa });
   });
 
   api.get('/menu', (req, res) => {
@@ -94,6 +100,50 @@ export function createApp({ store, catalog, site, publicDir, viewsDir, cachePage
     const code = normalizeMpesaCode(req.body?.code);
     if (!code) return res.status(422).json({ error: 'That doesn’t look like an M-Pesa code. It’s 10 letters and numbers, e.g. SJK3H7X9QW.' });
     res.json({ order: publicOrder(store.submitMpesaCode(order.id, code)) });
+  });
+
+  // ---------- M-Pesa STK Push (PIN prompt on the customer's phone) ----------
+  const stkLimiter = rateLimit({ windowMs: 10 * 60_000, max: 8, message: 'Too many M-Pesa prompts. Please wait a few minutes or pay via Paybill.' });
+
+  api.post('/orders/:token/stk', stkLimiter, async (req, res) => {
+    if (!mpesa) return res.status(404).json({ error: 'M-Pesa prompts aren’t set up yet. Please pay via Paybill.' });
+    const order = store.getOrderByToken(req.params.token);
+    if (!order) return res.status(404).json({ error: 'Order not found.' });
+    if (order.payment.status === 'paid') return res.json({ order: publicOrder(order) });
+    if (order.status === 'cancelled') return res.status(409).json({ error: 'This order was cancelled.' });
+    const phone = normalizePhone(req.body?.phone);
+    if (!phone || !phone.startsWith('0')) {
+      return res.status(422).json({ error: 'Enter the Safaricom number to pay with, e.g. 0712 345 678.' });
+    }
+    try {
+      const { checkoutRequestId } = await mpesa.stkPush({
+        phone,
+        amount: order.total,
+        accountReference: `LL${order.number}`,
+        description: `Order ${order.number}`,
+      });
+      res.json({ order: publicOrder(store.setStkPending(order.id, checkoutRequestId, phone)) });
+    } catch (err) {
+      res.status(502).json({ error: err.message });
+    }
+  });
+
+  // Safaricom posts the result here. Always answer 200 so they don't retry forever.
+  api.post('/mpesa/callback/:secret', (req, res) => {
+    if (!mpesa || req.params.secret !== mpesa.callbackSecret) return res.status(404).json({ error: 'Not found.' });
+    const result = parseStkCallback(req.body);
+    const order = result && store.getOrderByStkId(result.checkoutRequestId);
+    if (order && order.payment.status !== 'paid') {
+      if (result.success && result.amount >= order.total) {
+        store.setStkResult(order.id, { success: true, receipt: result.receipt });
+      } else if (result.success) {
+        // Paid, but less than the order total: leave it for staff to check.
+        store.setStkResult(order.id, { success: false, message: `Received KES ${result.amount} of KES ${order.total}. We’ll be in touch.` });
+      } else {
+        store.setStkResult(order.id, { success: false, message: stkFailureMessage(result.resultCode, result.message) });
+      }
+    }
+    res.json({ ResultCode: 0, ResultDesc: 'Accepted' });
   });
 
   const waitlistLimiter = rateLimit({ windowMs: 10 * 60_000, max: 10 });

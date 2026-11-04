@@ -20,6 +20,21 @@ services:
         generateValue: true
       - key: ADMIN_PASSWORD
         sync: false          # Render asks you to type this in during setup
+      # M-Pesa prompts (STK Push). Leave blank to keep manual Paybill only.
+      - key: PUBLIC_URL
+        sync: false          # e.g. https://luxe-latte.onrender.com
+      - key: MPESA_ENV
+        value: production
+      - key: MPESA_TYPE
+        value: paybill
+      - key: MPESA_SHORTCODE
+        sync: false
+      - key: MPESA_CONSUMER_KEY
+        sync: false
+      - key: MPESA_CONSUMER_SECRET
+        sync: false
+      - key: MPESA_PASSKEY
+        sync: false
     disk:
       name: luxe-data
       mountPath: /var/data

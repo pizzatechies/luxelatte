@@ -51,7 +51,16 @@ The Paybill and account belong to your bank/M-Pesa setup, so the site can't see 
 2. The order shows **"To verify"** on the dashboard with the code and amount.
 3. Check the M-Pesa message on your phone and click **Confirm paid**.
 
-If you later get your own M-Pesa shortcode with Daraja API access, the order flow can be extended to send an STK push automatically.
+### M-Pesa prompts (STK Push)
+
+The server version can also send the M-Pesa PIN prompt straight to the customer's phone. After checkout the prompt goes to the number they ordered with (they can change it and resend), and when they enter their PIN Safaricom tells the site, so the order turns **Paid** on its own with the M-Pesa receipt number. The manual Paybill steps stay available underneath.
+
+To turn it on you need a Paybill or Till **that you own** with Lipa na M-Pesa Online (Daraja) access. The shared Paybill 714777 with account 0112542203 can't send prompts on your behalf. Then:
+
+1. Create an app at https://developer.safaricom.co.ke and go live with your shortcode to get the consumer key, consumer secret and passkey.
+2. Set `MPESA_CONSUMER_KEY`, `MPESA_CONSUMER_SECRET`, `MPESA_SHORTCODE`, `MPESA_PASSKEY`, `MPESA_ENV=production` and `PUBLIC_URL` (your site's https address) on the server, then restart.
+
+Test first with `MPESA_ENV=sandbox` and Safaricom's sandbox shortcode `174379` and passkey. The GitHub Pages version can't send prompts, because it has no server to hold the keys or receive Safaricom's result.
 
 ## Deploying
 

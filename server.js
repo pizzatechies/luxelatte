@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { openDatabase } from './src/db.js';
 import { createCatalog, loadJson } from './src/catalog.js';
 import { createApp } from './src/app.js';
+import { createMpesa } from './src/mpesa.js';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const dataDir = path.join(root, 'data');
@@ -19,8 +20,12 @@ if (!adminPassword) {
   console.warn(`\n  ADMIN_PASSWORD is not set. Temporary dashboard password for this run: ${adminPassword}\n`);
 }
 
+const mpesa = createMpesa();
+if (mpesa) console.log(`M-Pesa prompts (STK Push) on. Callback: ${mpesa.callbackUrl.replace(/[^/]+$/, '<secret>')}`);
+
 const app = createApp({
   store,
+  mpesa,
   catalog,
   site,
   publicDir: path.join(root, 'public'),

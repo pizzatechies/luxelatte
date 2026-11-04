@@ -239,6 +239,7 @@ form.addEventListener('submit', async (e) => {
     });
     storage.set('ll_customer', { name: v.name.trim(), phone: v.phone.trim() });
     myOrders.add(order);
+    if (v.paymentMethod === 'mpesa') { try { sessionStorage.setItem(`ll_stk_${order.token}`, v.phone); } catch { /* ignore */ } }
     cart.clear();
     location.href = `/order/${encodeURIComponent(order.token)}?new=1`;
   } catch (err) {

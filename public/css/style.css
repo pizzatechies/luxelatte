@@ -611,3 +611,8 @@ textarea.input { min-height: 96px; resize: vertical; line-height: 1.5; }
 .notfound { min-height: 70vh; display: grid; place-items: center; text-align: center; padding: 48px 16px; }
 .notfound h1 { font-family: var(--font-display); font-weight: 400; color: var(--mocha); font-size: clamp(72px, 14vw, 140px); line-height: .9; }
 .notfound p { color: var(--ink-soft); margin: 12px 0 28px; }
+
+/* M-Pesa prompt: manual Paybill fallback */
+.manual-pay { margin-top: 18px; border-top: 1px dashed var(--line-strong); padding-top: 14px; }
+.manual-pay summary { cursor: pointer; font-weight: 600; font-size: 14px; color: var(--brown-700); }
+.manual-pay[open] summary { margin-bottom: 8px; }

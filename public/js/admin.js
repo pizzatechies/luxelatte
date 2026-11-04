@@ -146,7 +146,9 @@ function payBlock(o) {
     return `<div class="o-pay o-pay--verify"><span>M-Pesa code <code>${esc(p.mpesaCode)}</code><br><small>Check your M-Pesa messages for ${money(o.total)}</small></span>
       <button class="btn btn--xs btn--ok" data-act="pay" data-id="${o.id}" data-val="paid">Confirm paid</button></div>`;
   }
-  return `<div class="o-pay o-pay--unpaid"><span>${p.method === 'mpesa' ? 'Awaiting M-Pesa payment' : 'Pay at counter'}</span>
+  const stk = p.stk?.status === 'pending' ? 'M-Pesa prompt sent, waiting for PIN'
+    : p.stk?.status === 'failed' ? `M-Pesa prompt failed: ${esc(p.stk.message || '')}` : null;
+  return `<div class="o-pay o-pay--unpaid"><span>${stk || (p.method === 'mpesa' ? 'Awaiting M-Pesa payment' : 'Pay at counter')}</span>
     <button class="btn btn--xs btn--ghost" data-act="pay" data-id="${o.id}" data-val="paid">Mark paid</button></div>`;
 }
 

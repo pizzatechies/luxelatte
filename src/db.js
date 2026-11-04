@@ -53,6 +53,12 @@ export function openDatabase(file) {
   const db = new DatabaseSync(file);
   db.exec('PRAGMA journal_mode = WAL; PRAGMA foreign_keys = ON; PRAGMA busy_timeout = 3000;');
   db.exec(SCHEMA);
+  // Columns added after the first release (STK Push). Older databases get them on start-up.
+  const cols = new Set(db.prepare('PRAGMA table_info(orders)').all().map((c) => c.name));
+  for (const [name, type] of [['stk_checkout_id', 'TEXT'], ['stk_status', 'TEXT'], ['stk_message', 'TEXT'], ['stk_phone', 'TEXT']]) {
+    if (!cols.has(name)) db.exec(`ALTER TABLE orders ADD COLUMN ${name} ${type}`);
+  }
+  db.exec('CREATE INDEX IF NOT EXISTS idx_orders_stk ON orders(stk_checkout_id)');
   return createStore(db);
 }
 
@@ -69,7 +75,12 @@ function rowToOrder(row) {
     readyIn: row.ready_in,
     deliveryLocation: row.delivery_location,
     notes: row.notes,
-    payment: { method: row.payment_method, status: row.payment_status, mpesaCode: row.mpesa_code },
+    payment: {
+      method: row.payment_method,
+      status: row.payment_status,
+      mpesaCode: row.mpesa_code,
+      stk: row.stk_status ? { status: row.stk_status, message: row.stk_message, phone: row.stk_phone } : null,
+    },
     status: row.status,
     subtotal: row.subtotal,
     deliveryFee: row.delivery_fee,
@@ -135,6 +146,27 @@ function createStore(db) {
 
     submitMpesaCode(id, code) {
       q.setMpesaCode.run(code, now(), id);
+      return rowToOrder(q.byId.get(id));
+    },
+
+    /** A PIN prompt was sent; remember Safaricom's request id so the callback can find the order. */
+    setStkPending(id, checkoutId, phone) {
+      db.prepare(`UPDATE orders SET stk_checkout_id = ?, stk_status = 'pending', stk_message = NULL, stk_phone = ?, updated_at = ?
+        WHERE id = ?`).run(checkoutId, phone, now(), id);
+      return rowToOrder(q.byId.get(id));
+    },
+
+    getOrderByStkId: (checkoutId) => rowToOrder(db.prepare('SELECT * FROM orders WHERE stk_checkout_id = ?').get(checkoutId)),
+
+    /** Result from Safaricom. Success marks the order paid with the M-Pesa receipt number. */
+    setStkResult(id, { success, message, receipt }) {
+      if (success) {
+        db.prepare(`UPDATE orders SET stk_status = 'success', stk_message = NULL, payment_status = 'paid', mpesa_code = ?, updated_at = ?
+          WHERE id = ?`).run(receipt, now(), id);
+      } else {
+        db.prepare(`UPDATE orders SET stk_status = 'failed', stk_message = ?, updated_at = ? WHERE id = ? AND payment_status != 'paid'`)
+          .run(message, now(), id);
+      }
       return rowToOrder(q.byId.get(id));
     },
 

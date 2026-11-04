@@ -1,4 +1,4 @@
-import { $, esc, money, api, getSite, initChrome, myOrders, copyBtn, icons, clock, toast } from './lib.js';
+import { $, esc, money, api, getSite, initChrome, myOrders, copyBtn, icons, clock, toast, storage } from './lib.js';
 
 initChrome();
 
@@ -12,6 +12,7 @@ let current;
 let pollTimer;
 let showPayAnyway = false;
 let editingCode = false;
+let resendStk = false;
 
 const DONE_LABEL = { pickup: 'Collected', dinein: 'Served', delivery: 'Delivered' };
 const TYPE_LABEL = { pickup: 'Pick up', dinein: 'Dine in', delivery: 'Delivery' };
@@ -92,11 +93,57 @@ function paymentCard(o) {
       <p style="margin-top:14px;font-size:14px"><button type="button" class="copy" data-pay-now>Prefer to pay now with M-Pesa?</button></p>
     </div>`;
   }
+  if (site.stkEnabled) return stkCard(o);
   return `<div class="card">
     <h2>Pay with M-Pesa</h2>
     <p class="card__sub">Complete payment so we can get started. It takes less than a minute.</p>
     ${payInstructions(o)}
   </div>`;
+}
+
+/** STK Push: the customer types their number and gets the M-Pesa PIN prompt on their phone. */
+function stkCard(o) {
+  const stk = o.payment.stk;
+  const manual = `<details class="manual-pay"><summary>Or pay manually via Paybill ${esc(site.payment.paybill)}</summary>${payInstructions(o)}</details>`;
+  if (stk?.status === 'pending' && !resendStk) {
+    return `<div class="card">
+      <h2>Check your phone</h2>
+      <div class="notice notice--warn" style="margin-top:12px"><span class="spinner" aria-hidden="true" style="margin-top:3px"></span>
+        <div><strong>Enter your M-Pesa PIN to pay ${money(o.total)}.</strong><br>We sent the prompt to ${esc(stk.phone)}. This page updates as soon as you pay.</div></div>
+      <p style="margin-top:14px;font-size:14px"><button type="button" class="copy" data-stk-resend>Didn’t get it? Send again</button></p>
+      ${manual}
+    </div>`;
+  }
+  const phone = storage.get('ll_customer', null)?.phone || '';
+  return `<div class="card">
+    <h2>Pay with M-Pesa</h2>
+    <p class="card__sub">Enter your M-Pesa number and we’ll send a payment prompt to your phone. Just enter your PIN.</p>
+    ${stk?.status === 'failed' ? `<div class="notice notice--warn" style="margin-bottom:14px">${icons.info}<div>${esc(stk.message || 'The payment didn’t go through.')} Try again below.</div></div>` : ''}
+    <form class="code-form" data-stk-form novalidate>
+      <label class="sr-only" for="stk-phone">M-Pesa phone number</label>
+      <input class="input" id="stk-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="0712 345 678" value="${esc(phone)}" required style="text-transform:none;letter-spacing:0">
+      <button class="btn" type="submit">${icons.mpesa} Send prompt · ${money(o.total)}</button>
+    </form>
+    <p class="error" data-stk-error hidden style="color:var(--danger);font-size:14px;margin-top:8px"></p>
+    ${manual}
+  </div>`;
+}
+
+async function sendStk(phone, btn) {
+  const errEl = $('[data-stk-error]');
+  if (errEl) errEl.hidden = true;
+  btn?.classList.add('is-loading');
+  try {
+    const { order } = await api(`/orders/${encodeURIComponent(token)}/stk`, { method: 'POST', body: { phone } });
+    resendStk = false;
+    current = null;
+    apply(order);
+    toast('Prompt sent. Check your phone.', { icon: icons.mpesa });
+    startPolling();
+  } catch (err) {
+    if (errEl) { errEl.textContent = err.message; errEl.hidden = false; } else toast(err.message, { icon: icons.info });
+    btn?.classList.remove('is-loading');
+  }
 }
 
 function details(o) {
@@ -199,14 +246,17 @@ async function refresh() {
   }
 }
 
+// Poll every 8s, or every 3s while we're waiting for the customer to enter their M-Pesa PIN.
 function startPolling() {
   stopPolling();
-  pollTimer = setInterval(() => {
+  const tick = async () => {
     if (!current || ['completed', 'cancelled'].includes(current.status)) return stopPolling();
-    refresh();
-  }, 8000);
+    await refresh();
+    pollTimer = setTimeout(tick, current?.payment.stk?.status === 'pending' && current.payment.status !== 'paid' ? 3000 : 8000);
+  };
+  pollTimer = setTimeout(tick, current?.payment.stk?.status === 'pending' ? 3000 : 8000);
 }
-function stopPolling() { clearInterval(pollTimer); pollTimer = null; }
+function stopPolling() { clearTimeout(pollTimer); pollTimer = null; }
 
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) stopPolling();
@@ -215,12 +265,20 @@ document.addEventListener('visibilitychange', () => {
 
 root.addEventListener('click', async (e) => {
   if (e.target.closest('[data-pay-now]')) { showPayAnyway = true; render(current); $('#mpesa-code')?.focus(); }
+  if (e.target.closest('[data-stk-resend]')) { resendStk = true; render(current); $('#stk-phone')?.focus(); }
   if (e.target.closest('[data-edit-code]')) { editingCode = true; render(current); $('#mpesa-code')?.select(); }
   if (e.target.closest('[data-notify-me]')) {
     const perm = await Notification.requestPermission();
     if (perm === 'granted') toast('We’ll notify you when it’s ready.', { icon: icons.bell });
     render(current);
   }
+});
+
+root.addEventListener('submit', (e) => {
+  const form = e.target.closest('[data-stk-form]');
+  if (!form) return;
+  e.preventDefault();
+  sendStk(form.phone.value, form.querySelector('button'));
 });
 
 root.addEventListener('submit', async (e) => {
@@ -251,6 +309,11 @@ root.addEventListener('submit', async (e) => {
   await refresh();
   if (current) {
     myOrders.add(current);
+    // Straight after checkout: send the M-Pesa prompt to the number the customer ordered with.
+    const autoKey = `ll_stk_${token}`;
+    let autoPhone = null;
+    try { autoPhone = sessionStorage.getItem(autoKey); sessionStorage.removeItem(autoKey); } catch { /* storage blocked */ }
+    if (autoPhone && site.stkEnabled && current.payment.status !== 'paid' && !current.payment.stk) await sendStk(autoPhone);
     startPolling();
   } else if (!root.querySelector('h2')) root.innerHTML = failed;
 })();
