@@ -280,13 +280,8 @@
           "sizes": [
             {
               "id": "single",
-              "label": "Single",
+              "label": "Each",
               "price": 100
-            },
-            {
-              "id": "box6",
-              "label": "Box of 6",
-              "price": 550
             }
           ],
           "featured": true
@@ -300,13 +295,8 @@
           "sizes": [
             {
               "id": "single",
-              "label": "Single",
+              "label": "Each",
               "price": 100
-            },
-            {
-              "id": "box6",
-              "label": "Box of 6",
-              "price": 550
             }
           ]
         },
@@ -319,13 +309,8 @@
           "sizes": [
             {
               "id": "single",
-              "label": "Single",
-              "price": 80
-            },
-            {
-              "id": "pack3",
-              "label": "Pack of 3",
-              "price": 220
+              "label": "Each",
+              "price": 100
             }
           ]
         },
@@ -338,13 +323,8 @@
           "sizes": [
             {
               "id": "single",
-              "label": "Single",
-              "price": 50
-            },
-            {
-              "id": "pack4",
-              "label": "Pack of 4",
-              "price": 180
+              "label": "Each",
+              "price": 100
             }
           ]
         },
@@ -357,8 +337,8 @@
           "sizes": [
             {
               "id": "single",
-              "label": "Single",
-              "price": 150
+              "label": "Each",
+              "price": 100
             }
           ]
         },
@@ -372,7 +352,7 @@
             {
               "id": "slice",
               "label": "Slice",
-              "price": 150
+              "price": 100
             }
           ],
           "color2": "#f3d9a4"
@@ -387,7 +367,7 @@
             {
               "id": "slice",
               "label": "Slice",
-              "price": 200
+              "price": 100
             }
           ],
           "color2": "#7a4a33"
@@ -402,7 +382,7 @@
             {
               "id": "slice",
               "label": "Slice",
-              "price": 250
+              "price": 100
             }
           ],
           "color2": "#a8323e"
