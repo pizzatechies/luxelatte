@@ -264,6 +264,150 @@
         }
       ],
       "deliverySurcharge": 50
+    },
+    {
+      "id": "pastries",
+      "name": "Pastries",
+      "tagline": "Baked goodies to go with your cup.",
+      "layout": "wide",
+      "items": [
+        {
+          "id": "glazed-donut",
+          "name": "Glazed Donut",
+          "description": "Soft, fluffy and dipped in a sweet shiny glaze.",
+          "art": "donut",
+          "color": "#f6d7b0",
+          "sizes": [
+            {
+              "id": "single",
+              "label": "Single",
+              "price": 100
+            },
+            {
+              "id": "box6",
+              "label": "Box of 6",
+              "price": 550
+            }
+          ],
+          "featured": true
+        },
+        {
+          "id": "baked-donut",
+          "name": "Baked Donut",
+          "description": "Oven-baked, not fried. Light, golden and dusted with sugar.",
+          "art": "baked-donut",
+          "color": "#d9a25e",
+          "sizes": [
+            {
+              "id": "single",
+              "label": "Single",
+              "price": 100
+            },
+            {
+              "id": "box6",
+              "label": "Box of 6",
+              "price": 550
+            }
+          ]
+        },
+        {
+          "id": "choc-chip-cookie",
+          "name": "Chocolate Chip Cookie",
+          "description": "Chewy in the middle, crisp at the edges, loaded with chocolate chips.",
+          "art": "cookie",
+          "color": "#d9a066",
+          "sizes": [
+            {
+              "id": "single",
+              "label": "Single",
+              "price": 80
+            },
+            {
+              "id": "pack3",
+              "label": "Pack of 3",
+              "price": 220
+            }
+          ]
+        },
+        {
+          "id": "sweet-bun",
+          "name": "Sweet Bun",
+          "description": "A soft, buttery sweet bun. Simple and satisfying.",
+          "art": "bun",
+          "color": "#d8913f",
+          "sizes": [
+            {
+              "id": "single",
+              "label": "Single",
+              "price": 50
+            },
+            {
+              "id": "pack4",
+              "label": "Pack of 4",
+              "price": 180
+            }
+          ]
+        },
+        {
+          "id": "cinnamon-bun",
+          "name": "Cinnamon Bun",
+          "description": "Swirled with cinnamon sugar and topped with icing.",
+          "art": "cinnamon",
+          "color": "#d9a25e",
+          "sizes": [
+            {
+              "id": "single",
+              "label": "Single",
+              "price": 150
+            }
+          ]
+        },
+        {
+          "id": "vanilla-cake",
+          "name": "Vanilla Cake",
+          "description": "A moist vanilla sponge with creamy frosting.",
+          "art": "cake",
+          "color": "#fff3df",
+          "sizes": [
+            {
+              "id": "slice",
+              "label": "Slice",
+              "price": 150
+            }
+          ],
+          "color2": "#f3d9a4"
+        },
+        {
+          "id": "chocolate-cake",
+          "name": "Chocolate Cake",
+          "description": "Rich chocolate sponge layered with chocolate frosting.",
+          "art": "cake",
+          "color": "#5a3522",
+          "sizes": [
+            {
+              "id": "slice",
+              "label": "Slice",
+              "price": 200
+            }
+          ],
+          "color2": "#7a4a33"
+        },
+        {
+          "id": "red-velvet-cake",
+          "name": "Red Velvet Cake",
+          "description": "Velvety red sponge with cream cheese frosting.",
+          "art": "cake",
+          "color": "#fff6ec",
+          "sizes": [
+            {
+              "id": "slice",
+              "label": "Slice",
+              "price": 250
+            }
+          ],
+          "color2": "#a8323e"
+        }
+      ]
     }
   ]
 }

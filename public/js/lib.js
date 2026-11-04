@@ -97,7 +97,67 @@ export const icons = {
 const B = '#8a5d3a';
 export function art(item) {
   const c = esc(item?.color || B);
+  const c2 = esc(item?.color2 || '#f3d9a4');
   switch (item?.art) {
+    case 'donut': // glazed donut: glaze = color, with sprinkles
+      return `<svg viewBox="0 0 64 64" aria-hidden="true">
+        <ellipse cx="32" cy="54" rx="22" ry="4" fill="${B}" opacity=".12"/>
+        <circle cx="32" cy="33" r="22" fill="#dda05a" stroke="${B}" stroke-width="2"/>
+        <path d="M14 30 Q15 14 32 13 Q49 14 50 30 Q51 36 47 35 Q45 40 41 37 Q37 43 33 39 Q28 44 25 38 Q20 41 18 36 Q13 37 14 30Z" fill="${c}"/>
+        <circle cx="32" cy="31" r="6.5" fill="#fffaf2" stroke="${B}" stroke-width="2"/>
+        <g stroke-width="2.4" stroke-linecap="round">
+          <path d="M21 22 l3 -2" stroke="#fff6ec"/><path d="M40 19 l3 2" stroke="#ffc93c"/><path d="M44 28 l1 3" stroke="#8cbf3f"/>
+          <path d="M23 32 l-1 3" stroke="#ffc93c"/><path d="M30 20 l3 0" stroke="#8cbf3f"/><path d="M38 36 l2 -1" stroke="#fff6ec"/>
+        </g>
+      </svg>`;
+    case 'baked-donut': // baked donut: golden ring dusted with sugar
+      return `<svg viewBox="0 0 64 64" aria-hidden="true">
+        <ellipse cx="32" cy="54" rx="22" ry="4" fill="${B}" opacity=".12"/>
+        <circle cx="32" cy="33" r="22" fill="${c}" stroke="${B}" stroke-width="2"/>
+        <circle cx="32" cy="33" r="16" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="6"/>
+        <circle cx="32" cy="32" r="6.5" fill="#fffaf2" stroke="${B}" stroke-width="2"/>
+        <g fill="#fff8ef">
+          <circle cx="20" cy="26" r="1.2"/><circle cx="25" cy="19" r="1"/><circle cx="38" cy="18" r="1.2"/><circle cx="45" cy="25" r="1"/>
+          <circle cx="47" cy="37" r="1.2"/><circle cx="40" cy="46" r="1"/><circle cx="27" cy="47" r="1.2"/><circle cx="18" cy="39" r="1"/>
+          <circle cx="31" cy="22" r=".9"/><circle cx="41" cy="31" r=".9"/><circle cx="24" cy="34" r=".9"/><circle cx="34" cy="43" r=".9"/>
+        </g>
+      </svg>`;
+    case 'cookie':
+      return `<svg viewBox="0 0 64 64" aria-hidden="true">
+        <ellipse cx="32" cy="54" rx="22" ry="4" fill="${B}" opacity=".12"/>
+        <path d="M32 11 Q44 11 50 20 Q55 28 52 38 Q49 49 37 52 Q25 54 17 46 Q10 38 12 27 Q15 15 26 12Z" fill="${c}" stroke="${B}" stroke-width="2"/>
+        <g fill="#4e3634">
+          <ellipse cx="24" cy="24" rx="3" ry="2.4"/><ellipse cx="38" cy="20" rx="2.6" ry="2"/><ellipse cx="43" cy="33" rx="3" ry="2.4"/>
+          <ellipse cx="30" cy="36" rx="2.6" ry="2.2"/><ellipse cx="21" cy="40" rx="2.4" ry="2"/><ellipse cx="36" cy="45" rx="2.6" ry="2"/>
+        </g>
+        <path d="M20 18 Q26 14 32 14" stroke="#fff" stroke-opacity=".35" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      </svg>`;
+    case 'bun': // soft sweet bun with a glaze shine
+      return `<svg viewBox="0 0 64 64" aria-hidden="true">
+        <ellipse cx="32" cy="53" rx="25" ry="4.5" fill="${B}" opacity=".12"/>
+        <path d="M8 46 Q7 20 32 17 Q57 20 56 46 Q56 51 50 51 L14 51 Q8 51 8 46Z" fill="${c}" stroke="${B}" stroke-width="2"/>
+        <path d="M16 30 Q21 22 30 21" stroke="#fff" stroke-opacity=".45" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <g fill="#fff8ef"><ellipse cx="27" cy="31" rx="2" ry="1.1" transform="rotate(-20 27 31)"/><ellipse cx="36" cy="27" rx="2" ry="1.1"/><ellipse cx="42" cy="34" rx="2" ry="1.1" transform="rotate(20 42 34)"/><ellipse cx="32" cy="37" rx="2" ry="1.1"/></g>
+      </svg>`;
+    case 'cinnamon': // cinnamon roll, top view
+      return `<svg viewBox="0 0 64 64" aria-hidden="true">
+        <ellipse cx="32" cy="54" rx="22" ry="4" fill="${B}" opacity=".12"/>
+        <circle cx="32" cy="33" r="22" fill="${c}" stroke="${B}" stroke-width="2"/>
+        <path d="M32 33 m0 -3 a3 3 0 1 1 -3 3 a6 6 0 1 1 6 6 a9 9 0 1 1 -9 -9 a12 12 0 1 1 12 12 a15 15 0 1 1 -15 -15 a17 17 0 0 1 14 1"
+          fill="none" stroke="#8a4f26" stroke-width="2.6" stroke-linecap="round"/>
+        <path d="M17 26 Q24 20 30 26 T44 28 T50 36" fill="none" stroke="#fff8ef" stroke-width="3" stroke-linecap="round" opacity=".9"/>
+      </svg>`;
+    case 'cake': // cake slice: frosting = color, sponge = color2
+      return `<svg viewBox="0 0 64 64" aria-hidden="true">
+        <ellipse cx="34" cy="54" rx="24" ry="4" fill="${B}" opacity=".12"/>
+        <path d="M24 33 L56 25 L56 47 L24 53 Z" fill="${c2}" stroke="${B}" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M8 27 L24 33 L24 53 L8 46 Z" fill="${c2}" stroke="${B}" stroke-width="2" stroke-linejoin="round" style="filter:brightness(.9)"/>
+        <path d="M24 41 L56 34 M8 35 L24 41" stroke="${c}" stroke-width="3"/>
+        <path d="M8 27 L40 19 L56 25 L24 33 Z" fill="${c}" stroke="${B}" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M24 33 q4 6 8 -2 q4 5 8 -3 q4 5 8 -3 q3 4 8 -2" fill="${c}" stroke="none"/>
+        <circle cx="38" cy="22" r="3.6" fill="#b3263e" stroke="${B}" stroke-width="1.5"/>
+        <path d="M38 18.5 q2 -4 5 -4" stroke="#5a7d2a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>`;
     case 'juice':
       return `<svg viewBox="0 0 64 64" aria-hidden="true">
         <path d="M17 20 Q32 5 47 20 Z" fill="#fff" fill-opacity=".9" stroke="${B}" stroke-width="2" stroke-linejoin="round"/>
@@ -359,7 +419,7 @@ function setupDrawer() {
     const body = $('[data-cart-body]');
     const foot = $('[data-cart-foot]');
     if (!lines.length) {
-      body.innerHTML = `<div class="cart-empty">${art({ art: 'milk', color: '#dcc1ae' })}<strong>Your cart is empty</strong><p>Pick a coffee or a Luxe juice to get started.</p><a class="btn btn--ghost btn--sm" href="${link('/#menu')}" data-close-cart>Browse the menu</a></div>`;
+      body.innerHTML = `<div class="cart-empty">${art({ art: 'milk', color: '#dcc1ae' })}<strong>Your cart is empty</strong><p>Pick a coffee, a Luxe juice or a pastry to get started.</p><a class="btn btn--ghost btn--sm" href="${link('/#menu')}" data-close-cart>Browse the menu</a></div>`;
       foot.innerHTML = '';
       return;
     }
